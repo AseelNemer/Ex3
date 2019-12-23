@@ -9,8 +9,8 @@ HashMap<Integer ,edge_data> edges=new HashMap<Integer,edge_data>();
 
 	@Override
 	public node_data getNode(int key) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return nodes.get(key);
 	}
 
 	@Override
