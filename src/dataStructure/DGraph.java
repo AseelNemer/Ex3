@@ -1,5 +1,8 @@
 package dataStructure;
 import java.util.HashMap;
+
+import java.util.Iterator;
+
 import java.util.Collection;
 
 public class DGraph implements graph{
@@ -43,37 +46,48 @@ HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<
 	@Override
 	public Collection<node_data> getV() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return nodes.values();
 	}
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
 		// TODO Auto-generated method stub
-		return null;
+		return edges.get(node_id).values();
 	}
 
 	@Override
 	public node_data removeNode(int key) {
 		// TODO Auto-generated method stub
+		if(nodes.containsKey(key)){
+			return nodes.remove(key);
+			
+		}
 		return null;
 	}
 
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		// TODO Auto-generated method stub
-		return null;
+		return edges.get(src).remove(dest);
 	}
 
 	@Override
 	public int nodeSize() {
 		// TODO Auto-generated method stub
-		return 0;
+		return nodes.size();
 	}
 
 	@Override
 	public int edgeSize() {
 		// TODO Auto-generated method stub
-		return 0;
+		Iterator<Integer> itr=edges.keySet().iterator();
+		int V=0;
+		while(itr.hasNext()) {
+			itr.next();
+			V+=edges.get(itr).size();
+		}
+		return V;
 	}
 
 	@Override
