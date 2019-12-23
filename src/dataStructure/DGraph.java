@@ -5,7 +5,7 @@ import java.util.Collection;
 public class DGraph implements graph{
 	
 HashMap<Integer ,node_data> nodes=new HashMap<Integer,node_data>();
-HashMap<Integer ,edge_data> edges=new HashMap<Integer,edge_data>();
+HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<Integer,edge_data>>();
 
 	@Override
 	public node_data getNode(int key) {
@@ -15,19 +15,19 @@ HashMap<Integer ,edge_data> edges=new HashMap<Integer,edge_data>();
 
 	@Override
 	public edge_data getEdge(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return edges.get(src).get(dest);
 	}
 
 	@Override
 	public void addNode(node_data n) {
-		// TODO Auto-generated method stub
+		nodes.put(n.getKey(), n);
 		
 	}
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
