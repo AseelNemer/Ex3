@@ -28,7 +28,6 @@ HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<
 	@Override
 	public void connect(int src, int dest, double w) {
 		
-		
 	}
 
 	@Override
