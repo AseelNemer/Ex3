@@ -9,7 +9,12 @@ public class DGraph implements graph{
 	
 HashMap<Integer ,node_data> nodes=new HashMap<Integer,node_data>();
 HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<Integer,edge_data>>();
-
+/*
+public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,edge_data>> edge) {
+	this.nodes=new HashMap(node);
+	this.edges=new HashMap(edge);
+}
+*/
 	@Override
 	public node_data getNode(int key) {
 		
@@ -83,9 +88,10 @@ HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<
 		// TODO Auto-generated method stub
 		Iterator<Integer> itr=edges.keySet().iterator();
 		int V=0;
+		int i;
 		while(itr.hasNext()) {
-			itr.next();
-			V+=edges.get(itr).size();
+			i=itr.next();
+			V+=edges.get(i).size();
 		}
 		return V;
 	}
