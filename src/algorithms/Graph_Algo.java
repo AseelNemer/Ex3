@@ -1,6 +1,9 @@
 package algorithms;
 
 import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.Iterator;
 import dataStructure.DGraph;
 import dataStructure.edge_data;
@@ -15,6 +18,12 @@ import dataStructure.node_data;
  */
 public class Graph_Algo implements graph_algorithms{
 graph D=new DGraph();
+
+	
+	public Graph_Algo() 
+	{
+		D=new DGraph();
+	}
 	@Override
 	public void init(graph g) {
 		// TODO Auto-generated method stub
@@ -31,8 +40,6 @@ graph D=new DGraph();
 					edge_data r=etr.next();
 					D.connect(r.getSrc(), r.getDest(), r.getWeight());
 				}
-				
-				
 			}
 		}
 
@@ -40,8 +47,16 @@ graph D=new DGraph();
 
 	@Override
 	public void init(String file_name) {
-		// TODO Auto-generated method stub
 		
+		try 
+		{
+			FileInputStream file =new FileInputStream(file_name);
+			ObjectInputStream object=new ObjectInputStream(file);
+			graph g = (graph) object.readObject();
+			init(g);
+		}
+		catch (Exception e)
+		{}
 	}
 
 	@Override
