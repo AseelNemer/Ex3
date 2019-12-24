@@ -27,7 +27,17 @@ HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		
+
+		if(edges.containsKey(src)) {
+			HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
+			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
+		edges.put(src, f);
+		}else {
+			HashMap<Integer,edge_data> f=new HashMap<Integer,edge_data>();
+			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
+			edges.put(src, f);
+			
+		}
 	}
 
 	@Override
