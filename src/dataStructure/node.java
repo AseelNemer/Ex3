@@ -12,7 +12,7 @@ public class node implements node_data{
  public node()
  {
 	 this.key++;
-	 setLocation(new Point3D((double)this.getKey(),(double)this.getKey()));
+	 setLocation (new Point3D((double)this.getKey(),(double)this.getKey()));
 	 this.weight=(Double.MAX_VALUE);
 	 this.info=null;
 	 this.tag=0;
