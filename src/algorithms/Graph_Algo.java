@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -17,7 +18,7 @@ import dataStructure.node_data;
  *
  */
 public class Graph_Algo implements graph_algorithms{
-graph D=new DGraph();
+private graph D=new DGraph();
 
 	
 	public Graph_Algo() 
@@ -62,7 +63,13 @@ graph D=new DGraph();
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-		
+		try 
+		{
+			FileInputStream file =new FileInputStream(file_name);
+			ObjectInputStream object=new ObjectInputStream(file);
+		}
+		catch (Exception e)
+		{}
 	}
 
 	@Override
@@ -73,10 +80,23 @@ graph D=new DGraph();
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		// TODO Auto-generated method stub
+		//check if this src and this dest is in the graph
+		if(D.getNode(src)==null)  throw new IllegalArgumentException("the src you entered doesn't exist in this graph ");
+		if(D.getNode(dest)==null) throw new IllegalArgumentException("the dest you entered doesn't exist in this graph");
+		//set all the nodes tag to 0
+		setTag(D);
+		//set all the node weight to infinity
+		set_weight_inf(D);
+		//set the src tag to 0
+		D.getNode(src).setWeight(0);
+		
 		return 0;
 	}
 
+	private Exception TimeException(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
@@ -94,5 +114,26 @@ graph D=new DGraph();
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	private void setTag(graph g)
+	{
+		node_data n=new node();
+		Iterator<node_data> itr=g.getV().iterator();
+		while(itr.hasNext())
+		{
+			n=itr.next();
+			n.setTag(0);
+		}
+	}
+	private void set_weight_inf(graph g)
+	{
+		node_data n=new node();
+		Iterator<node_data> itr=g.getV().iterator();
+		while(itr.hasNext())
+		{
+			n=itr.next();
+			n.setWeight(Double.MAX_VALUE);
+			n.setInfo("");
+		}
+	}
+	
 }
