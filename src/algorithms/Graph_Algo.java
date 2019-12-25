@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.Iterator;
+import java.util.LinkedList;
+
 import dataStructure.DGraph;
 import dataStructure.edge_data;
 import dataStructure.graph;
@@ -104,7 +106,14 @@ private graph D=new DGraph();
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 		// TODO Auto-generated method stub
-		return null;
+this.RecursiveShortPath(src);
+	LinkedList<node_data> ans=new LinkedList<node_data>();
+	while(Integer.parseInt(D.getNode(src).getInfo())!=dest) {
+		ans.add(D.getNode(src));
+	}
+	ans.add(D.getNode(dest));
+	
+	return ans;
 	}
 
 	@Override
@@ -149,10 +158,12 @@ private graph D=new DGraph();
 			D.getNode(ed.getDest()).setWeight(v);
 			D.getNode(ed.getDest()).setTag(1);
 			RecursiveShortPath(ed.getDest());
+			D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
 		}else {
 			if(v<D.getNode(ed.getDest()).getWeight()) {
 				D.getNode(ed.getDest()).setWeight(v);
 				RecursiveShortPath(ed.getDest());
+				D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
 			}
 		}
 		
