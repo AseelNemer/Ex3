@@ -3,7 +3,7 @@ package dataStructure;
 import utils.Point3D;
 
 public class node implements node_data{
- private int key=0;
+ private static int key=0;
  private Point3D location;
  private double weight;
  private String info;

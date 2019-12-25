@@ -7,10 +7,10 @@ import java.util.Collection;
 
 public class DGraph implements graph{
 	
-HashMap<Integer ,node_data> nodes=new HashMap<Integer,node_data>();
-HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<Integer,edge_data>>();
-int MC=0;
-int num_of_edges=0;
+private HashMap<Integer ,node_data> nodes=new HashMap<Integer,node_data>();
+private HashMap<Integer ,HashMap<Integer,edge_data>> edges=new HashMap<Integer, HashMap<Integer,edge_data>>();
+private int MC=0;
+private int num_of_edges=0;
 
 public DGraph()
 {
@@ -110,7 +110,10 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 		
 		edge_data remove_edge=edges.get(src).remove(dest);
 		if(remove_edge!=null)//check if there dest is in edges hashmap
+		{
+			num_of_edges--;
 			MC++;//We made changes
+		}
 		return remove_edge;
 	}
 
