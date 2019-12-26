@@ -8,7 +8,6 @@ public class node implements node_data{
  private double weight;
  private String info;
  private int tag;
- 
  public node()
  {
 	 this.key++;

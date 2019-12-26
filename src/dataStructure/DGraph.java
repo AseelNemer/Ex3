@@ -86,12 +86,17 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 	@Override
 	public node_data removeNode(int key) {
 		// TODO Auto-generated method stub
+		node_data remove=new node();
 		//delete this key from the nodes hashmap
 		if(nodes.containsKey(key))
 		{
-			MC++;//We made changes
+			//We made changes
+			MC++;
+			remove=nodes.get(key);
 			this.nodes.remove(key);	
 		}
+		else
+			return null;
 		//delete this key from egdes(src)
 		if (edges.containsKey(key))
 			edges.remove(key);
@@ -101,7 +106,7 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 			if (edges.get(key).containsKey(key))
 				edges.get(key).remove(key);
 		
-		return null;
+		return remove;
 	}
 
 	@Override

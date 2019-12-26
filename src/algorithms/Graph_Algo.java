@@ -1,16 +1,20 @@
 package algorithms;
 
-import java.util.List;
+import java.util.*;
+import java.util.Stack;
 import java.util.concurrent.TimeoutException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+import java.util.Collection;
 import java.util.Iterator;
 import dataStructure.DGraph;
+import dataStructure.EdgeData;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.node_data;
+import utils.Point3D;
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
@@ -20,10 +24,12 @@ import dataStructure.node_data;
 public class Graph_Algo implements graph_algorithms{
 private graph D=new DGraph();
 
+
 	
 	public Graph_Algo() 
 	{
 		D=new DGraph();
+		
 	}
 	@Override
 	public void init(graph g) {
@@ -63,19 +69,49 @@ private graph D=new DGraph();
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-		try 
+		/**try 
 		{
 			FileInputStream file =new FileInputStream(file_name);
 			ObjectInputStream object=new ObjectInputStream(file);
 		}
 		catch (Exception e)
-		{}
+		{}*/
 	}
 
 	@Override
 	public boolean isConnected() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean flag=true;
+		int nodesize =0;
+		setTag(D);
+		Iterator<node_data> nodes=D.getV().iterator();
+		while(nodes.hasNext())
+		{
+			node_data node=nodes.next();
+			Iterator<edge_data> edges=D.getE(node.getKey()).iterator();
+		
+			while(edges.hasNext())
+			{
+				edge_data edge=edges.next();
+				node_data src=D.getNode(edge.getSrc());
+				node_data dest=D.getNode(edge.getDest());
+				if(src.getTag()==0)
+				{
+					nodesize++;
+					src.setTag(1);
+				}
+				if(dest.getTag()==0)
+				{
+					nodesize++;
+					dest.setTag(1);
+				}
+				
+			}
+		
+		
+		}
+		if(nodesize!=D.nodeSize())
+			flag=false;
+		return flag;
 	}
 
 	@Override
@@ -89,17 +125,56 @@ private graph D=new DGraph();
 		set_weight_inf(D);
 		//set the src tag to 0
 		D.getNode(src).setWeight(0);
+		Iterator<node_data> nodes=D.getV().iterator();
+		node_data node;
+		edge_data edge=new EdgeData();
 		
-		return 0;
+		
+		try 
+		{
+			while(nodes.hasNext())
+			{
+				node=nodes.next();
+				Iterator<edge_data> edges=D.getE(node.getKey()).iterator();
+			
+				while(edges.hasNext())
+				{
+					edge=edges.next();
+					int d=edge.getDest();
+					double tmp_w=node.getWeight()+edge.getWeight();
+					if(D.getNode(d).getWeight()>tmp_w)
+					{
+						D.getNode(d).setWeight(tmp_w);
+						D.getNode(d).setInfo(""+node.getKey());
+					}
+					D.getNode(d).setTag(1);
+				}
+				
+			
+			}
+		}
+		catch (Exception e) {}
+		
+		return D.getNode(dest).getKey();
 	}
-
-	private Exception TimeException(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-		// TODO Auto-generated method stub
+		Stack<node_data> stack=new Stack<node_data>();
+		node_data node=new node();
+		if(shortestPathDist( src, dest)>=0)
+		{
+			node=D.getNode(dest);
+			int temp;
+			while (node!=D.getNode(src))
+			{
+				stack.add(node);
+				temp= Integer.parseInt(node.getInfo());
+				node=D.getNode(temp);
+			}
+		}
+		stack.add(D.getNode(src));
+		
 		return null;
 	}
 
@@ -111,8 +186,22 @@ private graph D=new DGraph();
 
 	@Override
 	public graph copy() {
-		// TODO Auto-generated method stub
-		return null;
+		graph g=new DGraph();
+		Iterator<node_data> nodes=D.getV().iterator();
+		while(nodes.hasNext())
+		{
+			node_data node=nodes.next();
+			Collection<edge_data> edges=D.getE(node.getKey());
+			Iterator<edge_data> edgeitr=edges.iterator();
+			g.addNode(node);
+			while(edgeitr.hasNext())
+			{
+				edge_data e=edgeitr.next();
+				g.connect(node.getKey(), e.getDest(),e.getWeight() );
+			}
+			
+		}
+		return g;
 	}
 	private void setTag(graph g)
 	{
