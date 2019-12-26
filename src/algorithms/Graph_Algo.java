@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+
 import dataStructure.DGraph;
 import dataStructure.EdgeData;
 import dataStructure.edge_data;
@@ -116,6 +118,9 @@ private graph D=new DGraph();
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
+
+		// TODO Auto-generated method stub
+
 		//check if this src and this dest is in the graph
 		if(D.getNode(src)==null)  throw new IllegalArgumentException("the src you entered doesn't exist in this graph ");
 		if(D.getNode(dest)==null) throw new IllegalArgumentException("the dest you entered doesn't exist in this graph");
@@ -125,6 +130,7 @@ private graph D=new DGraph();
 		set_weight_inf(D);
 		//set the src tag to 0
 		D.getNode(src).setWeight(0);
+<<<<<<< HEAD
 		Iterator<node_data> nodes=D.getV().iterator();
 		node_data node;
 		edge_data edge=new EdgeData();
@@ -156,10 +162,21 @@ private graph D=new DGraph();
 		catch (Exception e) {}
 		
 		return D.getNode(dest).getKey();
+=======
+
+		RecursiveShortPath(src);
+		return D.getNode(dest).getWeight();
+	}
+
+	private Exception TimeException(String string) {
+		// TODO Auto-generated method stub
+		return null;
+>>>>>>> d08184186dbbda3c57ea194952a2ad0339771dae
 	}
 	
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
+<<<<<<< HEAD
 		Stack<node_data> stack=new Stack<node_data>();
 		node_data node=new node();
 		if(shortestPathDist( src, dest)>=0)
@@ -176,6 +193,17 @@ private graph D=new DGraph();
 		stack.add(D.getNode(src));
 		
 		return null;
+=======
+		// TODO Auto-generated method stub
+this.RecursiveShortPath(src);
+	LinkedList<node_data> ans=new LinkedList<node_data>();
+	while(Integer.parseInt(D.getNode(src).getInfo())!=dest) {
+		ans.add(D.getNode(src));
+	}
+	ans.add(D.getNode(dest));
+	
+	return ans;
+>>>>>>> d08184186dbbda3c57ea194952a2ad0339771dae
 	}
 
 	@Override
@@ -224,5 +252,27 @@ private graph D=new DGraph();
 			n.setInfo("");
 		}
 	}
-	
+	private void RecursiveShortPath(int src) {
+		Iterator<edge_data> itr=D.getE(src).iterator();
+		
+		while(itr.hasNext()) {
+			edge_data ed=itr.next();
+			double v=D.getNode(src).getWeight()+ed.getWeight();
+		if(D.getNode(ed.getDest()).getTag()==0) {
+			D.getNode(ed.getDest()).setWeight(v);
+			D.getNode(ed.getDest()).setTag(1);
+			RecursiveShortPath(ed.getDest());
+			D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+		}else {
+			if(v<D.getNode(ed.getDest()).getWeight()) {
+				D.getNode(ed.getDest()).setWeight(v);
+				RecursiveShortPath(ed.getDest());
+				D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+			}
+		}
+		
+		
+		}
+		
+	}
 }
