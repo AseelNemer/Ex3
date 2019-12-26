@@ -130,7 +130,7 @@ private graph D=new DGraph();
 		set_weight_inf(D);
 		//set the src tag to 0
 		D.getNode(src).setWeight(0);
-<<<<<<< HEAD
+
 		Iterator<node_data> nodes=D.getV().iterator();
 		node_data node;
 		edge_data edge=new EdgeData();
@@ -162,21 +162,17 @@ private graph D=new DGraph();
 		catch (Exception e) {}
 		
 		return D.getNode(dest).getKey();
-=======
+/**=======
 
 		RecursiveShortPath(src);
-		return D.getNode(dest).getWeight();
+		return D.getNode(dest).getWeight();*/
 	}
 
-	private Exception TimeException(String string) {
-		// TODO Auto-generated method stub
-		return null;
->>>>>>> d08184186dbbda3c57ea194952a2ad0339771dae
-	}
+	
 	
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-<<<<<<< HEAD
+
 		Stack<node_data> stack=new Stack<node_data>();
 		node_data node=new node();
 		if(shortestPathDist( src, dest)>=0)
@@ -192,8 +188,8 @@ private graph D=new DGraph();
 		}
 		stack.add(D.getNode(src));
 		
-		return null;
-=======
+		return stack;
+/**=======
 		// TODO Auto-generated method stub
 this.RecursiveShortPath(src);
 	LinkedList<node_data> ans=new LinkedList<node_data>();
@@ -203,7 +199,7 @@ this.RecursiveShortPath(src);
 	ans.add(D.getNode(dest));
 	
 	return ans;
->>>>>>> d08184186dbbda3c57ea194952a2ad0339771dae
+>>>>>>> d08184186dbbda3c57ea194952a2ad0339771dae*/
 	}
 
 	@Override
