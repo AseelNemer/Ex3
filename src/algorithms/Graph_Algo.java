@@ -162,10 +162,10 @@ private graph D=new DGraph();
 		}
 		catch (Exception e) {}
 		
-		return D.getNode(dest).getKey();
-/**=======
+		return D.getNode(dest).getWeight();
 
-		RecursiveShortPath(src);
+
+		/**RecursiveShortPath(src);
 		return D.getNode(dest).getWeight();*/
 	}
 

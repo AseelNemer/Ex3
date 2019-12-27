@@ -24,8 +24,8 @@ import utils.Point3D;
 public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	graph K=new DGraph();
 	
-	/**LinkedList<node_data> point=new LinkedList<node_data>(K.getV());
-	LinkedList<edge_data> edg=new LinkedList<edge_data>();*/
+	LinkedList<node_data> point=new LinkedList<node_data>(K.getV());
+	LinkedList<edge_data> edg=new LinkedList<edge_data>();
 	
 	public Graph_GUI() {
 		initGUI();
