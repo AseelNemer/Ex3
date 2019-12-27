@@ -51,7 +51,7 @@ private void initGUI() {
 	menu.add(item1);
 	this.addMouseListener(this);
 }
-@Override
+
 public void paint(Graphics g )
 {
 	super.paint(g);
@@ -70,13 +70,13 @@ public void paint(Graphics g )
 			Point3D p=n.getLocation();
 			Point3D p2=K.getNode(s.getDest()).getLocation();
 			
-			g.setColor(Color.BLUE);
-			g.fillOval(p2.ix(), p2.iy(), 10, 10);
+			//g.setColor(Color.BLUE);
+	        //g.fillOval(p2.ix(), p2.iy(), 10, 10);
 		
 			g.setColor(Color.RED);
 			g.drawLine(p.ix(), p.iy(), p2.ix(), p2.iy());
 			
-			//g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
+			g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
 		
 		
 		}

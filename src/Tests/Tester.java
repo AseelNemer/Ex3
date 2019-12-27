@@ -14,6 +14,7 @@ public class Tester {
 	public static void main(String[] args){
 		Graph_GUI Monster =new Graph_GUI();
 		Monster.setVisible(true);
+		
 	}
 
 	
