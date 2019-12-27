@@ -16,6 +16,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.node_data;
+import gui.Graph_GUI;
 import utils.Point3D;
 /**
  * This empty class represents the set of graph-theory algorithms
@@ -270,5 +271,22 @@ this.RecursiveShortPath(src);
 		
 		}
 		
+	}
+	public static void main(String[] args) {
+		/**graph g=new DGraph();
+		g.addNode(new node());
+		g.addNode(new node());
+		g.addNode(new node());
+		g.addNode(new node());
+		g.addNode(new node());
+		g.addNode(new node());
+		System.out.println(g.getNode(1).getKey());
+		System.out.println(g.getNode(4));
+		g.connect(1, 2, 10);
+		
+		Graph_GUI G=new Graph_GUI(g);
+		G.setVisible(true);
+		G.paint(null);*/
+
 	}
 }

@@ -3,14 +3,15 @@ package dataStructure;
 import utils.Point3D;
 
 public class node implements node_data{
- private static int key=0;
+ private  int key;
  private Point3D location;
  private double weight;
  private String info;
  private int tag;
+ public static int id = 1;
  public node()
  {
-	 this.key++;
+	 this.key = id++;
 	 setLocation (new Point3D((double)this.getKey(),(double)this.getKey()));
 	 this.weight=(Double.MAX_VALUE);
 	 this.info=null;
@@ -24,6 +25,13 @@ public class node implements node_data{
      setInfo(n.getInfo());
      
  }
+ public node(Point3D p) {
+	 this.key = id++;
+		this.weight = 0;
+		this.location = p;
+		this.info = "";
+		this.tag = 0;
+	}
  public node(int key,Point3D location) {
 		this.key = key;
 		if(location != null)
@@ -100,6 +108,13 @@ public class node implements node_data{
 	public void setTag(int t) {
 		// TODO Auto-generated method stub
 		this.tag=t;
+	}
+	@Override
+	public String toString() {
+		if(this.getLocation() != null)
+			return ("[Key: " + key + ", Location: (" + location.toString() + ")]");
+		else
+			return ("[Key: " + key + ", Location: null]");
 	}
 
 }
