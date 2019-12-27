@@ -50,12 +50,13 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 	@Override
 	public void connect(int src, int dest, double w) {
 		//if edges contain this src
-		if(edges.containsKey(src)) 
+		if(nodes.containsKey(src) && nodes.containsKey(dest)&& src!=dest) 
 		{
+			if(edges.containsKey(src)) {
 			HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
 			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
 			edges.put(src, f);
-			
+		}
 		}
 		//if edges dosn't contain this src
 		else
@@ -79,8 +80,11 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 
 	@Override
 	public Collection<edge_data> getE(int node_id) {
-		// TODO Auto-generated method stub
-		return edges.get(node_id).values();
+		// TODO Auto-generated method stub	
+		
+		return edges.get(node_id).values();	
+
+	
 	}
 
 	@Override

@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JFrame;
@@ -21,21 +23,23 @@ import dataStructure.node_data;
 import utils.Point3D;
 
 public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
-	graph K=new DGraph();
-	LinkedList<Point3D> points=new LinkedList<Point3D>();
-	LinkedList<node_data> point=new LinkedList<node_data>();
+	graph K=nodesFactory();
+	
+	LinkedList<node_data> point=new LinkedList<node_data>(K.getV());
 	LinkedList<edge_data> edg=new LinkedList<edge_data>();
 	public Graph_GUI() {
 		initGUI();
 	}
+	
 	public Graph_GUI(graph D){
-		this.K=D;
-		point=new LinkedList<node_data>(K.getV());
-		initGUI();
+		//this.K=D;
+	//	point=new LinkedList<node_data>(K.getV());
+		
+		//initGUI();
 		
 	}
 private void initGUI() {
-	this.setSize(500, 	 500);
+	this.setSize(800,800);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	MenuBar menuBar = new MenuBar();
 	Menu menu = new Menu("Menu");
@@ -47,36 +51,37 @@ private void initGUI() {
 	menu.add(item1);
 	this.addMouseListener(this);
 }
+@Override
 public void paint(Graphics g )
 {
 	super.paint(g);
 	
-	
-	
-	for (node_data n : point ) 
-	{
-	//	edg.addAll(K.getE(n.getKey()));
-		
+	Collection<node_data> node=K.getV();
+	Iterator<node_data> nodes=node.iterator();
+
+		while(nodes.hasNext()) {
+        node_data n=nodes.next();
 		g.setColor(Color.BLUE);
 		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
-		/*
-		for(edge_data s:edg) {
+			Collection<edge_data> edg=K.getE(n.getKey());	
+		Iterator<edge_data> itr=edg.iterator();
+		while(itr.hasNext()) {
+			edge_data s=itr.next();
+			Point3D p=n.getLocation();
+			Point3D p2=K.getNode(s.getDest()).getLocation();
+			
 			g.setColor(Color.BLUE);
-			g.fillOval((int)K.getNode(s.getDest()).getLocation().x(), (int)K.getNode(s.getDest()).getLocation().y(), 10, 10);
+			g.fillOval(p2.ix(), p2.iy(), 10, 10);
 		
 			g.setColor(Color.RED);
-			g.drawLine((int)n.getLocation().x(), (int)n.getLocation().y(), 
-					(int)K.getNode(s.getDest()).getLocation().x(), (int)K.getNode(s.getDest()).getLocation().y());
+			g.drawLine(p.ix(), p.iy(), p2.ix(), p2.iy());
 			
-			g.drawString(Double.toString(s.getWeight()), (int)((n.getLocation().x()+(int)K.getNode(s.getDest()).getLocation().x())/2),
-					(int)((n.getLocation().y()+(int)K.getNode(s.getDest()).getLocation().y())/2));
+			//g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
 		
 		
-	
 		}
-		*/
-
-	}
+		}
+	
 }
 @Override
 public void mouseClicked(MouseEvent e) {
@@ -96,6 +101,7 @@ public void mouseExited(MouseEvent e) {
 @Override
 public void mousePressed(MouseEvent e) {
 	// TODO Auto-generated method stub
+	/*
 	int x = e.getX();
 	int y = e.getY();
 	Point3D p = new Point3D(x,y);
@@ -104,6 +110,7 @@ public void mousePressed(MouseEvent e) {
 	point.add(s);
 	
 	repaint();
+	*/
 	System.out.println("mousePressed");
 }
 @Override
@@ -118,7 +125,7 @@ public void actionPerformed(ActionEvent e) {
 	
 	if(str.equals("Item 1"))
 	{
-
+/*
 		Point3D p1 = new Point3D(100,100);
 		Point3D p2 = new Point3D(50,300);
 		Point3D p3 = new Point3D(400,150);
@@ -128,7 +135,22 @@ public void actionPerformed(ActionEvent e) {
 		point.add(s);
 		point.add(s2);
 		point.add(s3);
+		*/
 		repaint();
 	}
+}
+private static graph nodesFactory() {
+	graph d=new DGraph();
+	d.addNode(new node(1,new Point3D(250,100)));
+	d.addNode(new node(2,new Point3D(50,250)));
+	d.addNode(new node(3,new Point3D(255,280)));
+	d.addNode(new node(4,new Point3D(500,500)));
+	d.addNode(new node(5,new Point3D(700,450)));
+	 d.connect(1, 2, 5);
+	 d.connect(1, 3, 4);
+	 d.connect(1, 4, 7);
+	 d.connect(2, 5, 2);
+	 d.connect(4, 5, 3);
+	 return d;
 }
 }

@@ -12,18 +12,10 @@ import utils.Point3D;
 public class Tester {
 	
 	public static void main(String[] args){
-graph g = new DGraph();
-nodesFactory(g);
-		Graph_GUI Monster =new Graph_GUI(g);
+		Graph_GUI Monster =new Graph_GUI();
 		Monster.setVisible(true);
 	}
-	public static void nodesFactory(graph d) {
-		for(int i=1;i<=5;i++){
-			Point3D p=new Point3D(i*10,i*10,0);
-	node_data node=new node(i,p);
-	d.addNode(node);
-	
-}
+
 	
 	}
-}
+
