@@ -16,6 +16,7 @@ import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.node_data;
+import gui.Graph_GUI;
 import utils.Point3D;
 /**
  * This empty class represents the set of graph-theory algorithms
@@ -162,10 +163,11 @@ private graph D=new DGraph();
 		catch (Exception e) {}
 		
 		return D.getNode(dest).getKey();
-/**=======
 
+/*
 		RecursiveShortPath(src);
-		return D.getNode(dest).getWeight();*/
+		return D.getNode(dest).getWeight();
+		*/
 	}
 
 	
@@ -205,7 +207,18 @@ this.RecursiveShortPath(src);
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		// TODO Auto-generated method stub
-		return null;
+		if(this.isConnected()!=true) return null;
+		List<node_data> ans=new LinkedList<node_data>();
+		double min=Double.MAX_VALUE;
+		for(int src:targets) {
+			for(int dest:targets) {
+				if(shortestPathDist(src,dest)<min) {
+					ans=shortestPath(src,dest);
+					min=shortestPathDist(src,dest);
+				}
+			}
+		}
+		return ans;
 	}
 
 	@Override
@@ -248,12 +261,15 @@ this.RecursiveShortPath(src);
 			n.setInfo("");
 		}
 	}
+	
+	/*
 	private void RecursiveShortPath(int src) {
 		Iterator<edge_data> itr=D.getE(src).iterator();
 		
 		while(itr.hasNext()) {
 			edge_data ed=itr.next();
 			double v=D.getNode(src).getWeight()+ed.getWeight();
+			
 		if(D.getNode(ed.getDest()).getTag()==0) {
 			D.getNode(ed.getDest()).setWeight(v);
 			D.getNode(ed.getDest()).setTag(1);
@@ -268,7 +284,17 @@ this.RecursiveShortPath(src);
 		}
 		
 		
+		
 		}
 		
+	}
+	*/
+	public static void main(String[] args) {
+		graph_algorithms g=new Graph_Algo();
+		g.init(Graph_GUI.nodesFactory());
+		System.out.println(g.isConnected());
+		System.out.println(g.shortestPathDist(1, 5));
+	
+
 	}
 }

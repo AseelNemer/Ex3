@@ -42,7 +42,10 @@ public class EdgeData implements edge_data {
 	@Override
 	public int getDest() {
 		// TODO Auto-generated method stub
+		
 		return this.dest.getKey();
+
+		
 	}
 
 	@Override

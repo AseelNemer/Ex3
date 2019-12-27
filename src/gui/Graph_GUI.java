@@ -9,12 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JFrame;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import javax.swing.JFrame;
-
 import dataStructure.DGraph;
 import dataStructure.edge_data;
 import dataStructure.graph;
@@ -25,23 +24,23 @@ import utils.Point3D;
 public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	graph K=nodesFactory();
 	
-	LinkedList<node_data> point=new LinkedList<node_data>(K.getV());
-	LinkedList<edge_data> edg=new LinkedList<edge_data>();
+
 	public Graph_GUI() {
 		initGUI();
 	}
 	
 	public Graph_GUI(graph D){
+		this.K=D;
 		//this.K=D;
-	//	point=new LinkedList<node_data>(K.getV());
-		
-		//initGUI();
-		
+		//point=new LinkedList<node_data>(K.getV());
+		initGUI();
 	}
+	
 private void initGUI() {
-	this.setSize(800,800);
+	this.setSize(500,500);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	MenuBar menuBar = new MenuBar();
+	
 	Menu menu = new Menu("Menu");
 	menuBar.add(menu);
 	this.setMenuBar(menuBar);
@@ -49,8 +48,10 @@ private void initGUI() {
 	MenuItem item1 = new MenuItem("Item 1");
 	item1.addActionListener(this);
 	menu.add(item1);
+	
 	this.addMouseListener(this);
 }
+
 
 public void paint(Graphics g )
 {
@@ -64,9 +65,10 @@ public void paint(Graphics g )
 		g.setColor(Color.BLUE);
 		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
 			Collection<edge_data> edg=K.getE(n.getKey());	
-		Iterator<edge_data> itr=edg.iterator();
+		Iterator<edge_data> itr=this.K.getE(n.getKey()).iterator();
 		while(itr.hasNext()) {
 			edge_data s=itr.next();
+			
 			Point3D p=n.getLocation();
 			Point3D p2=K.getNode(s.getDest()).getLocation();
 			
@@ -118,7 +120,7 @@ public void mouseReleased(MouseEvent e) {
 	// TODO Auto-generated method stub
 	System.out.println("mouseReleased");
 }
-@Override
+//@Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	String str = e.getActionCommand();
@@ -139,10 +141,10 @@ public void actionPerformed(ActionEvent e) {
 		repaint();
 	}
 }
-private static graph nodesFactory() {
+public static graph nodesFactory() {
 	graph d=new DGraph();
-	d.addNode(new node(1,new Point3D(250,100)));
-	d.addNode(new node(2,new Point3D(50,250)));
+	d.addNode(new node(2,new Point3D(250,100)));
+	d.addNode(new node(1,new Point3D(50,250)));
 	d.addNode(new node(3,new Point3D(255,280)));
 	d.addNode(new node(4,new Point3D(500,500)));
 	d.addNode(new node(5,new Point3D(700,450)));

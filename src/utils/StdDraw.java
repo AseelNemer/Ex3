@@ -1253,7 +1253,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 *  Drawing images.
 	 ***************************************************************************/
 	// get an image from the given filename
-	private static Image getImage(String filename) {
+	private static Image getImage1(String filename) {
 		if (filename == null) throw new IllegalArgumentException();
 
 		// to read from file
@@ -1294,7 +1294,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 *               especially if you don't call ImageIO.setUseCache(false)
 	 *               One advantage is that it returns a BufferedImage.
 	 ***************************************************************************/
-	/*
+	
     private static BufferedImage getImage(String filename) {
         if (filename == null) throw new IllegalArgumentException();
 
@@ -1329,7 +1329,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         }
         throw new IllegalArgumentException("image " + filename + " not found");
     }
-	 */
+	 
 	/**
 	 * Draws the specified image centered at (<em>x</em>, <em>y</em>).
 	 * The supported image formats are JPEG, PNG, and GIF.
@@ -1345,7 +1345,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 */
 	public static void picture(double x, double y, String filename) {
 		// BufferedImage image = getImage(filename);
-		Image image = getImage(filename);
+		Image image = getImage1(filename);
 		double xs = scaleX(x);
 		double ys = scaleY(y);
 		// int ws = image.getWidth();    // can call only if image is a BufferedImage
@@ -1371,7 +1371,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 */
 	public static void picture(double x, double y, String filename, double degrees) {
 		// BufferedImage image = getImage(filename);
-		Image image = getImage(filename);
+		Image image = getImage1(filename);
 		double xs = scaleX(x);
 		double ys = scaleY(y);
 		// int ws = image.getWidth();    // can call only if image is a BufferedImage
@@ -1402,7 +1402,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 * @throws IllegalArgumentException if the image filename is invalid
 	 */
 	public static void picture(double x, double y, String filename, double scaledWidth, double scaledHeight) {
-		Image image = getImage(filename);
+		Image image = getImage1(filename);
 		if (scaledWidth  < 0) throw new IllegalArgumentException("width  is negative: " + scaledWidth);
 		if (scaledHeight < 0) throw new IllegalArgumentException("height is negative: " + scaledHeight);
 		double xs = scaleX(x);
@@ -1439,7 +1439,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	public static void picture(double x, double y, String filename, double scaledWidth, double scaledHeight, double degrees) {
 		if (scaledWidth < 0) throw new IllegalArgumentException("width is negative: " + scaledWidth);
 		if (scaledHeight < 0) throw new IllegalArgumentException("height is negative: " + scaledHeight);
-		Image image = getImage(filename);
+		Image image = getImage1(filename);
 		double xs = scaleX(x);
 		double ys = scaleY(y);
 		double ws = factorX(scaledWidth);
