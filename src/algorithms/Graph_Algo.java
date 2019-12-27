@@ -162,12 +162,15 @@ private graph D=new DGraph();
 		}
 		catch (Exception e) {}
 		
-		return D.getNode(dest).getKey();
 
-/*
-		RecursiveShortPath(src);
 		return D.getNode(dest).getWeight();
-		*/
+
+
+
+
+		/**RecursiveShortPath(src);
+		return D.getNode(dest).getWeight();*/
+
 	}
 
 	
@@ -292,8 +295,8 @@ this.RecursiveShortPath(src);
 	public static void main(String[] args) {
 		graph_algorithms g=new Graph_Algo();
 		g.init(Graph_GUI.nodesFactory());
-		System.out.println(g.isConnected());
-		System.out.println(g.shortestPathDist(1, 5));
+	//	System.out.println(g.isConnected());
+		System.out.println(Double.toString(g.shortestPathDist(1, 5)));
 	
 
 	}

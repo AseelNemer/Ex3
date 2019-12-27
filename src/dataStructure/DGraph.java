@@ -153,6 +153,5 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 		return MC;
 	}
 	public static void main(String[] args){
-graph D=Graph_GUI.nodesFactory();
-}
+graph D=Graph_GUI.nodesFactory();}
 }

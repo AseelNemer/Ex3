@@ -22,8 +22,10 @@ import dataStructure.node_data;
 import utils.Point3D;
 
 public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
+
 	graph K=nodesFactory();
-	
+
+
 
 	public Graph_GUI() {
 		initGUI();
