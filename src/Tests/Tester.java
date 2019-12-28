@@ -1,5 +1,7 @@
 package Tests;
 import javax.swing.JFrame;
+
+import algorithms.Graph_Algo;
 import dataStructure.graph;
 import dataStructure.node;
 import dataStructure.DGraph;
@@ -22,9 +24,7 @@ public class Tester {
 		g.connect(2, 3, 20);
 		g.connect(3, 4, 2);
 		g.connect(0, 1, 5);
-		
-		
-		
+		Graph_Algo g1=new Graph_Algo();
 		
 		
 		
