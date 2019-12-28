@@ -5,7 +5,10 @@ import java.util.Stack;
 import java.util.concurrent.TimeoutException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -62,28 +65,47 @@ private graph D=new DGraph();
 
 	@Override
 	public void init(String file_name) {
-		
+		graph graph=null;
 		try 
 		{
 			FileInputStream file =new FileInputStream(file_name);
 			ObjectInputStream object=new ObjectInputStream(file);
-			graph g = (graph) object.readObject();
-			init(g);
+			 graph = (graph) object.readObject();
+			init(graph);
+			object.close();
+			file.close();
+			   System.out.println("Graph has been deserialized"); 
+	            System.out.println(D);
 		}
-		catch (Exception e)
-		{}
+        catch(IOException ex) 
+        { 
+            System.out.println("IOException is caught"); 
+        } 
+          
+        catch(ClassNotFoundException ex) 
+        { 
+            System.out.println("ClassNotFoundException is caught"); 
+        } 
 	}
 
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-		/**try 
+		try 
 		{
-			FileInputStream file =new FileInputStream(file_name);
-			ObjectInputStream object=new ObjectInputStream(file);
+			FileOutputStream file =new FileOutputStream(file_name);
+			ObjectOutputStream object=new ObjectOutputStream(file);
+			object.writeObject(D);
+			object.close();
+			file.close();
+			System.out.println("Graph has been serialized"); 
+			
 		}
-		catch (Exception e)
-		{}*/
+		catch (IOException e)
+		{
+			 System.out.println("IOException is caught"); 	
+		}
+  
 	}
 
 	@Override
