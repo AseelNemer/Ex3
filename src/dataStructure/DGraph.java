@@ -3,6 +3,8 @@ import java.util.HashMap;
 
 import java.util.Iterator;
 
+import gui.Graph_GUI;
+
 import java.util.Collection;
 
 public class DGraph implements graph{
@@ -50,7 +52,7 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 	@Override
 	public void connect(int src, int dest, double w) {
 		//if edges contain this src
-		if(nodes.containsKey(src) && nodes.containsKey(dest)&& src!=dest) 
+		if(nodes.containsKey(src) && nodes.containsKey(dest) && src!=dest) 
 		{
 			if(edges.containsKey(src)) {
 			HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
@@ -150,5 +152,6 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 	public int getMC() {
 		return MC;
 	}
-
+	public static void main(String[] args){
+graph D=Graph_GUI.nodesFactory();}
 }

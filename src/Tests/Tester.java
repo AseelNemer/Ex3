@@ -14,6 +14,7 @@ import utils.Point3D;
 public class Tester {
 	
 	public static void main(String[] args){
+		/**
 		graph g =new DGraph();
 		g.addNode(new node(new Point3D(20,15)));
 		g.addNode(new node(new Point3D(60,80)));
@@ -29,7 +30,10 @@ public class Tester {
 		
 		
 		
-		Graph_GUI Monster =new Graph_GUI(g);
+		Graph_GUI Monster =new Graph_GUI(g);*/
+
+		Graph_GUI Monster =new Graph_GUI();
+
 		Monster.setVisible(true);
 	}
 

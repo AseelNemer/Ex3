@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Menu;
 import java.awt.MenuBar;
@@ -22,11 +23,11 @@ import dataStructure.node_data;
 import utils.Point3D;
 
 public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
-	graph K=new DGraph();
-	
-	LinkedList<node_data> point=new LinkedList<node_data>(K.getV());
-	LinkedList<edge_data> edg=new LinkedList<edge_data>();
-	
+
+	graph K=nodesFactory();
+
+
+
 	public Graph_GUI() {
 		initGUI();
 	}
@@ -39,7 +40,7 @@ public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
 	}
 	
 private void initGUI() {
-	this.setSize(500,500);
+	this.setSize(800,800);
 	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	MenuBar menuBar = new MenuBar();
 	
@@ -54,30 +55,37 @@ private void initGUI() {
 	this.addMouseListener(this);
 }
 
-@Override
+
 public void paint(Graphics g )
 {
 	super.paint(g);
 	
-	//Collection<node_data> node=K.getV();
-	Iterator<node_data> nodes=this.K.getV().iterator();
+	Collection<node_data> node=K.getV();
+	Iterator<node_data> nodes=node.iterator();
 
-		while(nodes.hasNext()) {
-        node_data n=nodes.next();
-		g.setColor(Color.BLUE);
-		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
-			//Collection<edge_data> edg=K.getE(n.getKey());	
-		Iterator<edge_data> itr=this.K.getE(n.getKey()).iterator();
-		while(itr.hasNext()) {
+		while(nodes.hasNext()) 
+		{
+			node_data n=nodes.next();
+			
+			g.setColor(Color.BLUE);
+			g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
+			g.setFont(new Font("deafult", Font.BOLD,14));	
+			g.setColor(Color.BLUE);
+			String key=n.getKey()+"";
+			g.drawString(key, n.getLocation().ix()+3, n.getLocation().iy());
+			Collection<edge_data> edg=K.getE(n.getKey());	
+			Iterator<edge_data> itr=this.K.getE(n.getKey()).iterator();
+		while(itr.hasNext()) 
+		{
 			edge_data s=itr.next();
 			
 			Point3D p=n.getLocation();
 			Point3D p2=K.getNode(s.getDest()).getLocation();
-			
-			g.setColor(Color.BLUE);
-			g.fillOval(p2.ix(), p2.iy(), 10, 10);
 		
 			g.setColor(Color.RED);
+			g.setFont(new Font("deafult", Font.BOLD,14));
+			String weight = s.getWeight() + "";
+			
 			g.drawLine(p.ix(), p.iy(), p2.ix(), p2.iy());
 			
 			g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
@@ -125,11 +133,11 @@ public void mouseReleased(MouseEvent e) {
 //@Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
-	/**String str = e.getActionCommand();
+	String str = e.getActionCommand();
 	
 	if(str.equals("Item 1"))
 	{
-
+/*
 		Point3D p1 = new Point3D(100,100);
 		Point3D p2 = new Point3D(50,300);
 		Point3D p3 = new Point3D(400,150);
@@ -139,14 +147,23 @@ public void actionPerformed(ActionEvent e) {
 		point.add(s);
 		point.add(s2);
 		point.add(s3);
-		
+		*/
 		repaint();
-	}*/
+	}
 }
-private static graph nodesFactory() {
-	/*graph d=new DGraph();
-	d.addNode(new node(new Point3D(500, 500)));
-	 return d;*/
-	 return null;
+public static graph nodesFactory() {
+	graph d=new DGraph();
+	d.addNode(new node(2,new Point3D(250,100)));
+	d.addNode(new node(1,new Point3D(50,250)));
+	d.addNode(new node(3,new Point3D(255,280)));
+	d.addNode(new node(4,new Point3D(500,500)));
+	d.addNode(new node(5,new Point3D(700,450)));
+	 d.connect(1, 2, 5);
+	 d.connect(1, 3, 4);
+	 d.connect(1, 4, 7);
+	 d.connect(2, 5, 2);
+	 d.connect(4, 5, 3);
+	
+	 return d;
 }
 }
