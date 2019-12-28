@@ -55,13 +55,20 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 		if(nodes.containsKey(src) && nodes.containsKey(dest) && src!=dest) 
 		{
 			if(edges.containsKey(src)) {
+				if(edges.get(src).containsKey(dest)) {
+					
 			HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
-			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
-			edges.put(src, f);
-		}
-		}
-		//if edges dosn't contain this src
-		else
+			edge_data edge=new EdgeData(this.getNode(src),this.getNode(dest),w,0);
+			f.replace(dest,edge );
+			edges.replace(src, f);
+				}
+				else {
+					HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
+					edge_data edge=new EdgeData(this.getNode(src),this.getNode(dest),w,0);
+					f.put(dest, edge);
+					edges.replace(src, f);
+				}
+		}	else  //if edges dosn't contain this src
 		{
 			HashMap<Integer,edge_data> f=new HashMap<Integer,edge_data>();
 			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
@@ -69,8 +76,13 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 			
 			
 		}
-		MC++;//we made changes
+			
+			MC++;//we made changes
 		num_of_edges++;//we added a edge
+		}
+		
+	
+		
 	}
 
 	@Override
@@ -84,7 +96,7 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 	public Collection<edge_data> getE(int node_id) {
 		// TODO Auto-generated method stub	
 		
-		return edges.get(node_id).values();	
+		return  edges.get(node_id).values();	
 
 	
 	}

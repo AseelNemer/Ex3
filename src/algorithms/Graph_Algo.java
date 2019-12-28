@@ -42,17 +42,22 @@ private graph D=new DGraph();
 		while(itr.hasNext()) {
 			x=itr.next();
 			D.addNode(x);
-			if(g.getE(x.getKey())!=null) {
-				
+			
+		}
+		 itr=g.getV().iterator();
+		 x=new node();
+		while(itr.hasNext()) {
+			x=itr.next();
+			
 				Iterator<edge_data> etr=g.getE(x.getKey()).iterator();
 				
 				while(etr.hasNext()) {
 					edge_data r=etr.next();
 					D.connect(r.getSrc(), r.getDest(), r.getWeight());
 				}
-			}
+			
+		
 		}
-
 	}
 
 	@Override
@@ -123,6 +128,7 @@ private graph D=new DGraph();
 		// TODO Auto-generated method stub
 
 		//check if this src and this dest is in the graph
+	
 		if(D.getNode(src)==null)  throw new IllegalArgumentException("the src you entered doesn't exist in this graph ");
 		if(D.getNode(dest)==null) throw new IllegalArgumentException("the dest you entered doesn't exist in this graph");
 		//set all the nodes tag to 0
@@ -137,8 +143,7 @@ private graph D=new DGraph();
 		edge_data edge=new EdgeData();
 		
 		
-		try 
-		{
+		
 			while(nodes.hasNext())
 			{
 				node=nodes.next();
@@ -153,14 +158,16 @@ private graph D=new DGraph();
 					{
 						D.getNode(d).setWeight(tmp_w);
 						D.getNode(d).setInfo(""+node.getKey());
+						
 					}
+					
 					D.getNode(d).setTag(1);
 				}
 				
 			
 			}
-		}
-		catch (Exception e) {}
+		
+		
 		
 
 		return D.getNode(dest).getWeight();
@@ -168,9 +175,11 @@ private graph D=new DGraph();
 
 
 
-		/**RecursiveShortPath(src);
-		return D.getNode(dest).getWeight();*/
-
+		/*
+		RecursiveShortPath(src);
+		return D.getNode(dest).getWeight();
+		
+*/
 	}
 
 	
@@ -228,6 +237,11 @@ this.RecursiveShortPath(src);
 	public graph copy() {
 		graph g=new DGraph();
 		Iterator<node_data> nodes=D.getV().iterator();
+		while(nodes.hasNext()) {
+			node_data z=nodes.next();
+			g.addNode(z);
+		}
+		nodes=D.getV().iterator();
 		while(nodes.hasNext())
 		{
 			node_data node=nodes.next();
@@ -247,10 +261,13 @@ this.RecursiveShortPath(src);
 	{
 		node_data n=new node();
 		Iterator<node_data> itr=g.getV().iterator();
+		
 		while(itr.hasNext())
 		{
+			
 			n=itr.next();
-			n.setTag(0);
+			
+			g.getNode(n.getKey()).setTag(0);
 		}
 	}
 	private void set_weight_inf(graph g)
@@ -260,8 +277,8 @@ this.RecursiveShortPath(src);
 		while(itr.hasNext())
 		{
 			n=itr.next();
-			n.setWeight(Double.MAX_VALUE);
-			n.setInfo("");
+			g.getNode(n.getKey()).setWeight(Double.MAX_VALUE);
+			g.getNode(n.getKey()).setInfo("");
 		}
 	}
 	
@@ -278,26 +295,43 @@ this.RecursiveShortPath(src);
 			D.getNode(ed.getDest()).setTag(1);
 			RecursiveShortPath(ed.getDest());
 			D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+			
 		}else {
 			if(v<D.getNode(ed.getDest()).getWeight()) {
 				D.getNode(ed.getDest()).setWeight(v);
 				RecursiveShortPath(ed.getDest());
 				D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+				
 			}
 		}
-		
-		
-		
 		}
+		*/
 		
-	}
-	*/
+		
+		
+		
+	
+	
 	public static void main(String[] args) {
 		graph_algorithms g=new Graph_Algo();
-		g.init(Graph_GUI.nodesFactory());
-	//	System.out.println(g.isConnected());
-		System.out.println(Double.toString(g.shortestPathDist(1, 5)));
+		graph D=Graph_GUI.nodesFactory();
+		g.init(D);
+		System.out.println(g.isConnected());
+	    double x=g.shortestPathDist(1,4);
+	    System.out.println(x);
+		graph F=(graph) g.copy();
+		Collection<node_data> b=F.getV();
+		Iterator<node_data> iter=b.iterator();
+		while(iter.hasNext()) {
+			node_data no=iter.next();
+		Collection<edge_data> a=F.getE(no.getKey());
+		Iterator<edge_data> itr=a.iterator();
+	System.out.println(a.size());
+		while(itr.hasNext()) {
+			edge_data n=itr.next();
+			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
+		}
+		}
+}
 	
-
-	}
 }

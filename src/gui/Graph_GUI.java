@@ -67,7 +67,7 @@ public void paint(Graphics g )
 		g.setColor(Color.BLUE);
 		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
 			Collection<edge_data> edg=K.getE(n.getKey());	
-		Iterator<edge_data> itr=this.K.getE(n.getKey()).iterator();
+		Iterator<edge_data> itr=edg.iterator();
 		while(itr.hasNext()) {
 			edge_data s=itr.next();
 			
@@ -155,6 +155,7 @@ public static graph nodesFactory() {
 	 d.connect(1, 4, 7);
 	 d.connect(2, 5, 2);
 	 d.connect(4, 5, 3);
+	 d.connect(3, 4, 1.5);
 	 return d;
 }
 }
