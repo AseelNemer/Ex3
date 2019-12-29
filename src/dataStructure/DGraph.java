@@ -21,14 +21,14 @@ public DGraph()
 	this.MC=0;
 	this.num_of_edges=0;
 }
-
+/*
 public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,edge_data>> edge) {
 	this.nodes=node;
 	this.edges=edge;
 	this.MC=0;
 	this.num_of_edges=0;
 }
-
+*/
 	@Override
 	public node_data getNode(int key) {
 		

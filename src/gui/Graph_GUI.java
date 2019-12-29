@@ -57,11 +57,12 @@ private void initGUI() {
 
 public void paint(Graphics g )
 {
+	node_data prev=null;
 	super.paint(g);
 	
 	Collection<node_data> node=K.getV();
 	Iterator<node_data> nodes=node.iterator();
-
+if(prev==null) {
 		while(nodes.hasNext()) {
         node_data n=nodes.next();
 		g.setColor(Color.BLUE);
@@ -82,11 +83,19 @@ public void paint(Graphics g )
 			
 			g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
 		
+			 prev=K.getNode(s.getDest());
+		  }
+		}
 		
-		}
-		}
-	
 }
+//else {
+	node_data LastNE=K.getNode(K.getV().size());
+   K.connect(prev.getKey(),LastNE.getKey(),Math.random()*20);
+   
+
+   
+   }
+//}
 @Override
 public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
@@ -105,16 +114,19 @@ public void mouseExited(MouseEvent e) {
 @Override
 public void mousePressed(MouseEvent e) {
 	// TODO Auto-generated method stub
-	/*
+	
 	int x = e.getX();
 	int y = e.getY();
 	Point3D p = new Point3D(x,y);
 	node_data s=new node();
 	s.setLocation(p);
-	point.add(s);
+	K.addNode(s);
+	
+	
+	
 	
 	repaint();
-	*/
+	
 	System.out.println("mousePressed");
 }
 @Override
@@ -156,6 +168,7 @@ public static graph nodesFactory() {
 	 d.connect(2, 5, 2);
 	 d.connect(4, 5, 3);
 	 d.connect(3, 4, 1.5);
+	 
 	 return d;
 }
 }

@@ -11,10 +11,7 @@ class DGraphTest {
 		fail("Not yet implemented");
 	}
 
-	@Test
-	void testDGraphHashMapOfIntegernode_dataHashMapOfIntegerHashMapOfIntegeredge_data() {
-		fail("Not yet implemented");
-	}
+
 
 	@Test
 	void testGetNode() {

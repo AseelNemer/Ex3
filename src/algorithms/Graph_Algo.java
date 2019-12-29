@@ -354,6 +354,7 @@ this.RecursiveShortPath(src);
 			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
 		}
 		}
+		System.out.println(F.getMC());
 }
 	
 }
