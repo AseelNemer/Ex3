@@ -69,6 +69,14 @@ void init(){
 		assertEquals(x, edge.getTag());
 	}
 
-
+   @Test
+   void TesttoString() {
+		Point3D p=new Point3D(3,3);
+		Point3D p2=new Point3D(4,4);
+		src=new node(3,p);
+		dest=new node(4,p2);
+		edge=new EdgeData(src,dest,3,0);
+		assertEquals("([Key: 3, Location: (3.0,3.0,0.0)],[Key: 4, Location: (4.0,4.0,0.0)])",edge.toString());
+   }
 
 }
