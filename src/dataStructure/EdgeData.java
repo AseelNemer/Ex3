@@ -1,5 +1,7 @@
 package dataStructure;
 
+import utils.Point3D;
+
 public class EdgeData implements edge_data {
 	 node_data src;
 	 node_data dest;
@@ -15,9 +17,7 @@ public class EdgeData implements edge_data {
 		 this.info="";
 		 this.tag=1;
 	 }
-	 public EdgeData(int src,int dest,double w,int t) {
-		 
-	 }
+
 	 public EdgeData(node_data s,node_data d,double w,int t)
 	 {
 		 this.src=s;
@@ -77,5 +77,9 @@ public class EdgeData implements edge_data {
 		// TODO Auto-generated method stub
 		this.tag=t;
 	}
+    public String toString() {
+    	String ans="("+src+","+dest+")";
+    	return ans;
+    }
 
 }

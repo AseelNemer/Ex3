@@ -134,10 +134,12 @@ private void initGUI()
 
 public void paint(Graphics g )
 {
+	node_data prev=null;
 	super.paint(g);
 	
 	Collection<node_data> node=graph.getV();
 	Iterator<node_data> nodes=node.iterator();
+<<<<<<< HEAD
 	
 		while(nodes.hasNext()) 
 		{
@@ -151,6 +153,14 @@ public void paint(Graphics g )
 			g.drawString(key, n.getLocation().ix()+3, n.getLocation().iy());
 			Collection<edge_data> edg=graph.getE(n.getKey());	
 
+=======
+if(prev==null) {
+		while(nodes.hasNext()) {
+        node_data n=nodes.next();
+		g.setColor(Color.BLUE);
+		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
+			Collection<edge_data> edg=K.getE(n.getKey());	
+>>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
 		Iterator<edge_data> itr=edg.iterator();
 		while(itr.hasNext()) {
 
@@ -167,11 +177,19 @@ public void paint(Graphics g )
 			
 			g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
 		
+			 prev=K.getNode(s.getDest());
+		  }
+		}
 		
-		}
-		}
-	
 }
+//else {
+	node_data LastNE=K.getNode(K.getV().size());
+   K.connect(prev.getKey(),LastNE.getKey(),Math.random()*20);
+   
+
+   
+   }
+//}
 @Override
 public void actionPerformed(ActionEvent e) {
 	
@@ -396,6 +414,7 @@ public void mouseExited(MouseEvent e) {
 	System.out.println("mouseExited");
 }
 @Override
+<<<<<<< HEAD
 public void mousePressed(MouseEvent e) 
 {
 	//String str_key = JOptionPane.showInputDialog(this, "Please insert node key");
@@ -413,6 +432,23 @@ public void mousePressed(MouseEvent e)
 	{
 		JOptionPane.showMessageDialog(this," ERR: "+e1.getMessage());
 	}
+=======
+public void mousePressed(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+	int x = e.getX();
+	int y = e.getY();
+	Point3D p = new Point3D(x,y);
+	node_data s=new node();
+	s.setLocation(p);
+	K.addNode(s);
+	
+	
+	
+	
+	repaint();
+	
+>>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
 	System.out.println("mousePressed");
 }
 @Override
@@ -434,11 +470,15 @@ public void mouseReleased(MouseEvent e) {
 	 d.connect(2, 5, 2);
 	 d.connect(4, 5, 3);
 	 d.connect(3, 4, 1.5);
+<<<<<<< HEAD
 	graph_algorithms  g=new Graph_Algo();
 	g.init(d);
 	//System.out.println(g.isConnected());
 	 
 
+=======
+	 
+>>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
 	 return d;
 }*/
 }

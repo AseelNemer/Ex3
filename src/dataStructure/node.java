@@ -116,5 +116,10 @@ public class node implements node_data{
 		else
 			return ("[Key: " + key + ", Location: null]");
 	}
-
+public static void main(String[] args) {
+	Point3D p=new Point3D(2,3);
+	node a=new node(3,p);
+	System.out.println(a);
+	
+}
 }

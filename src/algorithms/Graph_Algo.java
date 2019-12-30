@@ -351,7 +351,12 @@ this.RecursiveShortPath(src);
 			edge_data n=itr.next();
 			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
 		}
+<<<<<<< HEAD
 		}*/
+=======
+		}
+		System.out.println(F.getMC());
+>>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
 }
 	
 }

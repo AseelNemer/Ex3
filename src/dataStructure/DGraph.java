@@ -22,13 +22,6 @@ public DGraph()
 	this.num_of_edges=0;
 }
 
-public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,edge_data>> edge) {
-	this.nodes=node;
-	this.edges=edge;
-	this.MC=0;
-	this.num_of_edges=0;
-}
-
 	@Override
 	public node_data getNode(int key) {
 		
@@ -43,7 +36,13 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 
 	@Override
 	public void addNode(node_data n) {
+<<<<<<< HEAD
 		if(n==null) throw new RuntimeException("Invalid input");
+=======
+		if(nodes.containsKey(n.getKey())) {
+			throw new RuntimeException ("this node key is already availabe in V "+n.getKey());
+		}
+>>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
 		nodes.put(n.getKey(), n);
 		edges.put(n.getKey(),new HashMap<Integer,edge_data>());
 		MC++;
