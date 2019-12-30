@@ -5,7 +5,10 @@ import java.util.Stack;
 import java.util.concurrent.TimeoutException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -27,65 +30,89 @@ import utils.Point3D;
 public class Graph_Algo implements graph_algorithms{
 private graph D=new DGraph();
 
-
-	
 	public Graph_Algo() 
 	{
 		D=new DGraph();
 		
 	}
+	
 	@Override
 	public void init(graph g) {
 		// TODO Auto-generated method stub
 		Iterator<node_data> itr=g.getV().iterator();
 		node_data x=new node();
-		while(itr.hasNext()) {
+		while(itr.hasNext()) 
+		{
 			x=itr.next();
 			D.addNode(x);
-			if(g.getE(x.getKey())!=null) {
-				
+			
+		}
+		 itr=g.getV().iterator();
+		 x=new node();
+		while(itr.hasNext()) 
+		{
+			x=itr.next();
+			
 				Iterator<edge_data> etr=g.getE(x.getKey()).iterator();
 				
-				while(etr.hasNext()) {
+				while(etr.hasNext())
+				{
 					edge_data r=etr.next();
 					D.connect(r.getSrc(), r.getDest(), r.getWeight());
 				}
-			}
 		}
-
 	}
-
+	
 	@Override
 	public void init(String file_name) {
-		
+		graph graph=null;
 		try 
 		{
 			FileInputStream file =new FileInputStream(file_name);
 			ObjectInputStream object=new ObjectInputStream(file);
-			graph g = (graph) object.readObject();
-			init(g);
-			
+
+			 graph = (graph) object.readObject();
+			init(graph);
 			object.close();
 			file.close();
+			   System.out.println("Graph has been deserialized"); 
+	            System.out.println(D);
 		}
-		catch (Exception e)
-		{}
+        catch(IOException ex) 
+        { 
+            System.out.println("IOException is caught"); 
+        } 
+          
+        catch(ClassNotFoundException ex) 
+        { 
+            System.out.println("ClassNotFoundException is caught"); 
+        } 
 	}
 
 	@Override
 	public void save(String file_name) {
 		// TODO Auto-generated method stub
-		/**try 
+		try 
 		{
-			FileInputStream file =new FileInputStream(file_name);
-			ObjectInputStream object=new ObjectInputStream(file);
+			FileOutputStream file =new FileOutputStream(file_name);
+			ObjectOutputStream object=new ObjectOutputStream(file);
+			object.writeObject(D);
+			object.close();
+			file.close();
+			System.out.println("Graph has been serialized"); 
+			
 		}
-		catch (Exception e)
-		{}*/
+		catch (IOException e)
+		{
+			 System.out.println("IOException is caught"); 	
+		}
+  
 	}
 
 	@Override
 	public boolean isConnected() {
+		if(this.D==null)
+			return false;
 		boolean flag=true;
 		int nodesize =0;
 		setTag(D);
@@ -123,15 +150,16 @@ private graph D=new DGraph();
 	@Override
 	public double shortestPathDist(int src, int dest) {
 
-		// TODO Auto-generated method stub
-
 		//check if this src and this dest is in the graph
 		if(D.getNode(src)==null)  throw new IllegalArgumentException("the src you entered doesn't exist in this graph ");
 		if(D.getNode(dest)==null) throw new IllegalArgumentException("the dest you entered doesn't exist in this graph");
+		
 		//set all the nodes tag to 0
 		setTag(D);
+		
 		//set all the node weight to infinity
 		set_weight_inf(D);
+		
 		//set the src tag to 0
 		D.getNode(src).setWeight(0);
 
@@ -140,8 +168,7 @@ private graph D=new DGraph();
 		edge_data edge=new EdgeData();
 		
 		
-		try 
-		{
+		
 			while(nodes.hasNext())
 			{
 				node=nodes.next();
@@ -156,24 +183,23 @@ private graph D=new DGraph();
 					{
 						D.getNode(d).setWeight(tmp_w);
 						D.getNode(d).setInfo(""+node.getKey());
+						
 					}
+					
 					D.getNode(d).setTag(1);
 				}
 				
 			
 			}
-		}
-		catch (Exception e) {}
 		
-
+		//if(D.getNode(dest).getWeight()<Double.MAX_VALUE)
+			return D.getNode(dest).getWeight();
+		//return 0;
+		/*
+		RecursiveShortPath(src);
 		return D.getNode(dest).getWeight();
 
-
-
-
-		/**RecursiveShortPath(src);
-		return D.getNode(dest).getWeight();*/
-
+*/
 	}
 
 	
@@ -181,7 +207,7 @@ private graph D=new DGraph();
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 
-		Stack<node_data> stack=new Stack<node_data>();
+		List<node_data> list=new LinkedList<node_data>();
 		node_data node=new node();
 		if(shortestPathDist( src, dest)>=0)
 		{
@@ -189,14 +215,14 @@ private graph D=new DGraph();
 			int temp;
 			while (node!=D.getNode(src))
 			{
-				stack.add(node);
+				list.add(node);
 				temp= Integer.parseInt(node.getInfo());
 				node=D.getNode(temp);
 			}
 		}
-		stack.add(D.getNode(src));
+		list.add(D.getNode(src));
 		
-		return stack;
+		return list;
 /**=======
 		// TODO Auto-generated method stub
 this.RecursiveShortPath(src);
@@ -231,6 +257,11 @@ this.RecursiveShortPath(src);
 	public graph copy() {
 		graph g=new DGraph();
 		Iterator<node_data> nodes=D.getV().iterator();
+		while(nodes.hasNext()) {
+			node_data z=nodes.next();
+			g.addNode(z);
+		}
+		nodes=D.getV().iterator();
 		while(nodes.hasNext())
 		{
 			node_data node=nodes.next();
@@ -250,10 +281,13 @@ this.RecursiveShortPath(src);
 	{
 		node_data n=new node();
 		Iterator<node_data> itr=g.getV().iterator();
+		
 		while(itr.hasNext())
 		{
+			
 			n=itr.next();
-			n.setTag(0);
+			
+			g.getNode(n.getKey()).setTag(0);
 		}
 	}
 	private void set_weight_inf(graph g)
@@ -263,8 +297,8 @@ this.RecursiveShortPath(src);
 		while(itr.hasNext())
 		{
 			n=itr.next();
-			n.setWeight(Double.MAX_VALUE);
-			n.setInfo("");
+			g.getNode(n.getKey()).setWeight(Double.MAX_VALUE);
+			g.getNode(n.getKey()).setInfo("");
 		}
 	}
 	
@@ -281,26 +315,43 @@ this.RecursiveShortPath(src);
 			D.getNode(ed.getDest()).setTag(1);
 			RecursiveShortPath(ed.getDest());
 			D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+			
 		}else {
 			if(v<D.getNode(ed.getDest()).getWeight()) {
 				D.getNode(ed.getDest()).setWeight(v);
 				RecursiveShortPath(ed.getDest());
 				D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+				
 			}
 		}
-		
-		
-		
 		}
+		*/
 		
-	}
-	*/
-	public static void main(String[] args) {
-		graph_algorithms g=new Graph_Algo();
-		g.init(Graph_GUI.nodesFactory());
-	//	System.out.println(g.isConnected());
-		System.out.println(Double.toString(g.shortestPathDist(1, 5)));
+		
+		
+		
 	
-
-	}
+	
+	public static void main(String[] args) {
+	/**	graph_algorithms g=new Graph_Algo();
+		graph D=Graph_GUI.nodesFactory();
+		g.init(D);
+		System.out.println(g.isConnected());
+	    double x=g.shortestPathDist(1,4);
+	    System.out.println(x);
+		graph F=(graph) g.copy();
+		Collection<node_data> b=F.getV();
+		Iterator<node_data> iter=b.iterator();
+		while(iter.hasNext()) {
+			node_data no=iter.next();
+		Collection<edge_data> a=F.getE(no.getKey());
+		Iterator<edge_data> itr=a.iterator();
+	System.out.println(a.size());
+		while(itr.hasNext()) {
+			edge_data n=itr.next();
+			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
+		}
+		}*/
+}
+	
 }

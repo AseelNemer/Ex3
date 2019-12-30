@@ -43,6 +43,7 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 
 	@Override
 	public void addNode(node_data n) {
+		if(n==null) throw new RuntimeException("Invalid input");
 		nodes.put(n.getKey(), n);
 		edges.put(n.getKey(),new HashMap<Integer,edge_data>());
 		MC++;
@@ -55,13 +56,20 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 		if(nodes.containsKey(src) && nodes.containsKey(dest) && src!=dest) 
 		{
 			if(edges.containsKey(src)) {
+				if(edges.get(src).containsKey(dest)) {
+					
 			HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
-			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
-			edges.put(src, f);
-		}
-		}
-		//if edges dosn't contain this src
-		else
+			edge_data edge=new EdgeData(this.getNode(src),this.getNode(dest),w,0);
+			f.replace(dest,edge );
+			edges.replace(src, f);
+				}
+				else {
+					HashMap<Integer,edge_data> f=new HashMap(edges.get(src));
+					edge_data edge=new EdgeData(this.getNode(src),this.getNode(dest),w,0);
+					f.put(dest, edge);
+					edges.replace(src, f);
+				}
+		}	else  //if edges dosn't contain this src
 		{
 			HashMap<Integer,edge_data> f=new HashMap<Integer,edge_data>();
 			f.put(dest,(edge_data) new EdgeData(this.getNode(src),this.getNode(dest),w,0));
@@ -69,8 +77,13 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 			
 			
 		}
-		MC++;//we made changes
+			
+			MC++;//we made changes
 		num_of_edges++;//we added a edge
+		}
+		
+	
+		
 	}
 
 	@Override
@@ -84,7 +97,7 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 	public Collection<edge_data> getE(int node_id) {
 		// TODO Auto-generated method stub	
 		
-		return edges.get(node_id).values();	
+		return  edges.get(node_id).values();	
 
 	
 	}
@@ -94,27 +107,33 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 		// TODO Auto-generated method stub
 		node_data remove=new node();
 		//delete this key from the nodes hashmap
+		
 		if(nodes.containsKey(key))
 		{
 			//We made changes
 			MC++;
 			remove=nodes.get(key);
 			this.nodes.remove(key);	
+		//delete this key from edges(dest)
+		Collection<node_data> n =nodes.values();
+		Iterator<node_data> itr = n.iterator();
+		while(itr.hasNext()) 
+		{
+			node_data node=itr.next();
+			if (edges.get(node.getKey()).get(key)!=null)
+				{
+					edges.get(node.getKey()).remove(key);
+					num_of_edges--;
+				}
 		}
-		else
-			return null;
 		//delete this key from egdes(src)
 		if (edges.containsKey(key))
 			edges.remove(key);
-		
-		//delete this key from edges(dest)
-		for (int i=0;i<edges.size();i++)
-			if (edges.get(key).containsKey(key))
-				edges.get(key).remove(key);
-		
+		}
+		else
+			throw new IllegalArgumentException("This Key Does  Not Exist In Graph");
 		return remove;
 	}
-
 	@Override
 	public edge_data removeEdge(int src, int dest) {
 		// TODO Auto-generated method stub
@@ -153,5 +172,6 @@ public DGraph(HashMap<Integer ,node_data> node,HashMap<Integer ,HashMap<Integer,
 		return MC;
 	}
 	public static void main(String[] args){
-graph D=Graph_GUI.nodesFactory();}
+//graph D=Graph_GUI.nodesFactory();
+		}
 }

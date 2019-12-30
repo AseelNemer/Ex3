@@ -26,7 +26,7 @@ public class node implements node_data{
      
  }
  public node(Point3D p) {
-	 this.key = id++;
+	 	this.key = id++;
 		this.weight = 0;
 		this.location = p;
 		this.info = "";
