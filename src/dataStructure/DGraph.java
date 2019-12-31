@@ -36,13 +36,13 @@ public DGraph()
 
 	@Override
 	public void addNode(node_data n) {
-<<<<<<< HEAD
+
 		if(n==null) throw new RuntimeException("Invalid input");
-=======
+
 		if(nodes.containsKey(n.getKey())) {
 			throw new RuntimeException ("this node key is already availabe in V "+n.getKey());
 		}
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
+
 		nodes.put(n.getKey(), n);
 		edges.put(n.getKey(),new HashMap<Integer,edge_data>());
 		MC++;

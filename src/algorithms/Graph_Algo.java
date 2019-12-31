@@ -39,6 +39,7 @@ private graph D=new DGraph();
 	@Override
 	public void init(graph g) {
 		// TODO Auto-generated method stub
+		 D=new DGraph();
 		Iterator<node_data> itr=g.getV().iterator();
 		node_data x=new node();
 		while(itr.hasNext()) 
@@ -96,7 +97,7 @@ private graph D=new DGraph();
 		{
 			FileOutputStream file =new FileOutputStream(file_name);
 			ObjectOutputStream object=new ObjectOutputStream(file);
-			object.writeObject(D);
+			object.writeObject(this.D);
 			object.close();
 			file.close();
 			System.out.println("Graph has been serialized"); 
@@ -104,7 +105,7 @@ private graph D=new DGraph();
 		}
 		catch (IOException e)
 		{
-			 System.out.println("IOException is caught"); 	
+			e.printStackTrace();
 		}
   
 	}
@@ -127,11 +128,7 @@ private graph D=new DGraph();
 				edge_data edge=edges.next();
 				node_data src=D.getNode(edge.getSrc());
 				node_data dest=D.getNode(edge.getDest());
-				if(src.getTag()==0)
-				{
-					nodesize++;
-					src.setTag(1);
-				}
+				
 				if(dest.getTag()==0)
 				{
 					nodesize++;
@@ -158,56 +155,17 @@ private graph D=new DGraph();
 		setTag(D);
 		
 		//set all the node weight to infinity
-		set_weight_inf(D);
-		
-		//set the src tag to 0
-		D.getNode(src).setWeight(0);
-
-		Iterator<node_data> nodes=D.getV().iterator();
-		node_data node;
-		edge_data edge=new EdgeData();
-		
-		
-		
-			while(nodes.hasNext())
-			{
-				node=nodes.next();
-				Iterator<edge_data> edges=D.getE(node.getKey()).iterator();
-			
-				while(edges.hasNext())
-				{
-					edge=edges.next();
-					int d=edge.getDest();
-					double tmp_w=node.getWeight()+edge.getWeight();
-					if(D.getNode(d).getWeight()>tmp_w)
-					{
-						D.getNode(d).setWeight(tmp_w);
-						D.getNode(d).setInfo(""+node.getKey());
-						
-					}
-					
-					D.getNode(d).setTag(1);
-				}
-				
-			
-			}
-		
-		//if(D.getNode(dest).getWeight()<Double.MAX_VALUE)
-			return D.getNode(dest).getWeight();
-		//return 0;
-		/*
+		set_weight_inf(D,src);
+	
 		RecursiveShortPath(src);
 		return D.getNode(dest).getWeight();
 
-*/
 	}
 
-	
-	
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
 
-		List<node_data> list=new LinkedList<node_data>();
+		LinkedList<node_data> list=new LinkedList<node_data>();
 		node_data node=new node();
 		if(shortestPathDist( src, dest)>=0)
 		{
@@ -215,12 +173,12 @@ private graph D=new DGraph();
 			int temp;
 			while (node!=D.getNode(src))
 			{
-				list.add(node);
+				list.addFirst(node);
 				temp= Integer.parseInt(node.getInfo());
 				node=D.getNode(temp);
 			}
 		}
-		list.add(D.getNode(src));
+		list.addFirst(D.getNode(src));
 		
 		return list;
 /**=======
@@ -257,20 +215,18 @@ this.RecursiveShortPath(src);
 	public graph copy() {
 		graph g=new DGraph();
 		Iterator<node_data> nodes=D.getV().iterator();
-		while(nodes.hasNext()) {
-			node_data z=nodes.next();
-			g.addNode(z);
-		}
-		nodes=D.getV().iterator();
 		while(nodes.hasNext())
 		{
 			node_data node=nodes.next();
 			Collection<edge_data> edges=D.getE(node.getKey());
 			Iterator<edge_data> edgeitr=edges.iterator();
-			g.addNode(node);
+			if(!g.getV().contains(node))
+				g.addNode(node);
 			while(edgeitr.hasNext())
 			{
 				edge_data e=edgeitr.next();
+				if(!g.getV().contains(D.getNode(e.getDest())))
+					g.addNode(D.getNode(e.getDest()));
 				g.connect(node.getKey(), e.getDest(),e.getWeight() );
 			}
 			
@@ -290,46 +246,49 @@ this.RecursiveShortPath(src);
 			g.getNode(n.getKey()).setTag(0);
 		}
 	}
-	private void set_weight_inf(graph g)
+	private void set_weight_inf(graph g,int src)
 	{
 		node_data n=new node();
 		Iterator<node_data> itr=g.getV().iterator();
+		
 		while(itr.hasNext())
 		{
 			n=itr.next();
 			g.getNode(n.getKey()).setWeight(Double.MAX_VALUE);
 			g.getNode(n.getKey()).setInfo("");
 		}
+		g.getNode(src).setWeight(0);
 	}
 	
-	/*
-	private void RecursiveShortPath(int src) {
+	
+private void RecursiveShortPath(int src) {
 		Iterator<edge_data> itr=D.getE(src).iterator();
 		
-		while(itr.hasNext()) {
-			edge_data ed=itr.next();
-			double v=D.getNode(src).getWeight()+ed.getWeight();
+		while(itr.hasNext())
+		{
+				edge_data ed=itr.next();
+				double v=D.getNode(src).getWeight()+ed.getWeight();
 			
-		if(D.getNode(ed.getDest()).getTag()==0) {
-			D.getNode(ed.getDest()).setWeight(v);
-			D.getNode(ed.getDest()).setTag(1);
-			RecursiveShortPath(ed.getDest());
-			D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+				if(D.getNode(ed.getDest()).getTag()==0) 
+				{
+					D.getNode(ed.getDest()).setWeight(v);
+					D.getNode(ed.getDest()).setTag(1);
+					RecursiveShortPath(ed.getDest());
+					D.getNode(ed.getDest()).setInfo(Integer.toString(ed.getSrc()));
 			
-		}else {
-			if(v<D.getNode(ed.getDest()).getWeight()) {
-				D.getNode(ed.getDest()).setWeight(v);
-				RecursiveShortPath(ed.getDest());
-				D.getNode(ed.getSrc()).setInfo(Integer.toString(ed.getDest()));
+				}
+				else 
+				{
+					if(v<D.getNode(ed.getDest()).getWeight()) {
+						D.getNode(ed.getDest()).setWeight(v);
+						RecursiveShortPath(ed.getDest());
+						D.getNode(ed.getDest()).setInfo(Integer.toString(ed.getSrc()));
 				
+					}
+		
+				}
 			}
 		}
-		}
-		*/
-		
-		
-		
-		
 	
 	
 	public static void main(String[] args) {
@@ -352,11 +311,11 @@ this.RecursiveShortPath(src);
 			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
 		}
 <<<<<<< HEAD
-		}*/
+		}
 =======
 		}
 		System.out.println(F.getMC());
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
+>>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc*/
 }
 	
 }

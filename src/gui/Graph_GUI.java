@@ -139,7 +139,7 @@ public void paint(Graphics g )
 	
 	Collection<node_data> node=graph.getV();
 	Iterator<node_data> nodes=node.iterator();
-<<<<<<< HEAD
+
 	
 		while(nodes.hasNext()) 
 		{
@@ -153,43 +153,36 @@ public void paint(Graphics g )
 			g.drawString(key, n.getLocation().ix()+3, n.getLocation().iy());
 			Collection<edge_data> edg=graph.getE(n.getKey());	
 
-=======
-if(prev==null) {
-		while(nodes.hasNext()) {
-        node_data n=nodes.next();
-		g.setColor(Color.BLUE);
-		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
-			Collection<edge_data> edg=K.getE(n.getKey());	
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
-		Iterator<edge_data> itr=edg.iterator();
-		while(itr.hasNext()) {
 
-			edge_data s=itr.next();
-			
-			Point3D p=n.getLocation();
-			Point3D p2=graph.getNode(s.getDest()).getLocation();
-		
-			g.setColor(Color.RED);
-			g.setFont(new Font("deafult", Font.BOLD,14));
-			String weight = s.getWeight() + "";
-			
-			g.drawLine(p.ix(), p.iy(), p2.ix(), p2.iy());
-			
-			g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
-		
-			 prev=K.getNode(s.getDest());
-		  }
-		}
-		
-}
-//else {
-	node_data LastNE=K.getNode(K.getV().size());
-   K.connect(prev.getKey(),LastNE.getKey(),Math.random()*20);
-   
+			Iterator<edge_data> itr=edg.iterator();
+			while(itr.hasNext()) {
 
-   
-   }
-//}
+				edge_data s=itr.next();
+				
+				Point3D p=n.getLocation();
+				Point3D p2=graph.getNode(s.getDest()).getLocation();
+			
+				g.setColor(Color.RED);
+				g.setFont(new Font("deafult", Font.BOLD,14));
+				String weight = s.getWeight() + "";
+				
+				g.drawLine(p.ix(), p.iy(), p2.ix(), p2.iy());
+				
+				g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
+			
+				g.setColor(Color.YELLOW);
+				int x=(int)0.8*p2.ix()+ (int)0.2*p.ix();
+				int y =(int)0.8*p2.iy()+ (int)0.2*p.iy();
+				g.fillOval(x-5, y-5, 10, 10);
+				
+				//g.fillOval(x, y, width, height);
+			}
+			}
+		
+	}
+
+	
+
 @Override
 public void actionPerformed(ActionEvent e) {
 	
@@ -305,12 +298,12 @@ private void connect()
     	int dest=Integer.parseInt(str_dst);
     	double w= Double.parseDouble(str_w);
     	graph.connect(src, dest, w);
-    	JOptionPane.showMessageDialog(this, "connect succed");
+    	JOptionPane.showMessageDialog(this, "connect succeed");
      }
      catch(Exception e)
      {
          JOptionPane.showMessageDialog(this, "ERROR: " + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-
+         System.out.println(e.getMessage());
      }
      repaint();
 }
@@ -334,25 +327,43 @@ private void delete_edge()
 }
 private void TSP()
 {
-	/**String str_src= JOptionPane.showInputDialog(this,"Please insert source node");
-    String str_dst=JOptionPane.showInputDialog(this,"Please insert destination node");
-    try {
-    	algoG.init(graph);
-		int src=Integer.parseInt(str_src);
-		int dest=Integer.parseInt(str_dst);
-		LinkedList<node_data> list 
-    	
-    }catch(Exception e)
-    {
-    	JOptionPane.showMessageDialog(this, "ERR :"+e.getMessage());
-    }*/
+	try {
+	algoG.init(graph);
+	String targets_Num=JOptionPane.showInputDialog(this, "Please Insert The Number Of Targets");
+	int targets_num=Integer.parseInt(targets_Num);
+	LinkedList<Integer> targets=new LinkedList<Integer>();
+	String keys="";
+	int key;
+	for (int i=0;i<targets_num;i++)
+	{
+		  keys= JOptionPane.showInputDialog(this,"Please insert target number");
+		  key=Integer.parseInt(keys);
+		  targets.add(key);
+	}
+	LinkedList<node_data> Tsp=(LinkedList<node_data>) algoG.TSP(targets);
+	String path="{";
+	
+	for (int i=0;i<Tsp.size();i++)
+		if(i!=Tsp.size()-1)
+			path+=Tsp.get(i).getKey()+",";
+		else 
+			path+=Tsp.get(i).getKey();
+	path+="}";
+	 JOptionPane.showMessageDialog(this, " Is:"+path);
+	 repaint();
+	}
+	catch(Exception e)
+	{
+		JOptionPane.showMessageDialog(this, e.getMessage());
+	}
 }
 private void shortest_path_distance()
 {
+	algoG.init(graph);
 	 String str_src= JOptionPane.showInputDialog(this,"Please insert source node");
      String str_dst=JOptionPane.showInputDialog(this,"Please insert destination node");
 	try {
-		algoG.init(graph);
+		
 		int src=Integer.parseInt(str_src);
 		int dest=Integer.parseInt(str_dst);
 		double shortestpath=algoG.shortestPathDist(src, dest);
@@ -361,8 +372,9 @@ private void shortest_path_distance()
              JOptionPane.showMessageDialog(this, "There Is No Path Between This Two Points ", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 		 else
 			 JOptionPane.showMessageDialog(this, "The Shortest Path Between The Two Points Is:"+shortestpath);
-		
-	}catch(Exception e)
+		repaint();
+	}
+	catch(Exception e)
 	{
 		JOptionPane.showMessageDialog(this, "ERR :"+e.getMessage());
 	}
@@ -383,14 +395,14 @@ private void shortest_path()
              JOptionPane.showMessageDialog(this, "There Is No Path Between This Two Points ", "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 		 else {
 			 String path="{";
-			 for (int i=shortestpath.size()-1;i>=0;i--)
-				 if (i!=0)
+			 for (int i=0;i<shortestpath.size();i++)
+				 if (i!=shortestpath.size()-1)
 					 path+=shortestpath.get(i).getKey()+",";
 				 else
 					 path+=shortestpath.get(i).getKey();
 			 path+="}";
 			 JOptionPane.showMessageDialog(this, "The Shortest Path Between The Two Points Is:"+path);
-		
+		repaint();
 		 }
 	}catch(Exception e)
 	{
@@ -414,17 +426,20 @@ public void mouseExited(MouseEvent e) {
 	System.out.println("mouseExited");
 }
 @Override
-<<<<<<< HEAD
+
 public void mousePressed(MouseEvent e) 
 {
-	//String str_key = JOptionPane.showInputDialog(this, "Please insert node key");
+	String str_key = JOptionPane.showInputDialog(this, "Please insert node key");
 	try 
 	{
+		int key =Integer.parseInt(str_key);
 		int x = e.getX();
 		int y = e.getY();
+		System.out.println(x);
+		System.out.println(y);
 		Point3D p = new Point3D(x,y);
 		//int key=Integer.parseInt(str_key);
-		graph.addNode(new node(p));
+		graph.addNode(new node(key,p));
 		JOptionPane.showMessageDialog(this, "Add Node succed");
 		repaint();
 	}
@@ -432,23 +447,7 @@ public void mousePressed(MouseEvent e)
 	{
 		JOptionPane.showMessageDialog(this," ERR: "+e1.getMessage());
 	}
-=======
-public void mousePressed(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
-	int x = e.getX();
-	int y = e.getY();
-	Point3D p = new Point3D(x,y);
-	node_data s=new node();
-	s.setLocation(p);
-	K.addNode(s);
-	
-	
-	
-	
-	repaint();
-	
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
+
 	System.out.println("mousePressed");
 }
 @Override
