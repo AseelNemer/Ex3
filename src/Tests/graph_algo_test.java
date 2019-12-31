@@ -75,7 +75,10 @@ static void initialize()
 
 	@Test
 	void testInitString() {
-		
+		 graph_alg.save("test.txt");
+		 Graph_Algo afterInit=new Graph_Algo();
+	      afterInit.init("test.txt");
+	      assertEquals(graph_alg.isConnected(),afterInit.isConnected());
 	}
 
 	
@@ -129,7 +132,7 @@ static void initialize()
 		targets.add(5);
 
 		List<node_data> path=new LinkedList<node_data>();
-		path=graph_alg.TSP(targets);
+		path.addAll(graph_alg.TSP(targets));
 		List<node_data> ans=new LinkedList<node_data>();
 		ans.add(g.getNode(3));
 		ans.add(g.getNode(1));

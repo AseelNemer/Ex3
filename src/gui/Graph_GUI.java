@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FilenameFilter;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -170,6 +173,7 @@ public void paint(Graphics g )
 				
 				g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
 			
+
 				g.setColor(Color.YELLOW);
 				int x=(int)0.8*p2.ix()+ (int)0.2*p.ix();
 				int y =(int)0.8*p2.iy()+ (int)0.2*p.iy();
@@ -182,7 +186,6 @@ public void paint(Graphics g )
 	}
 
 	
-
 @Override
 public void actionPerformed(ActionEvent e) {
 	
@@ -226,21 +229,53 @@ public void actionPerformed(ActionEvent e) {
 }
 private void savefile()
 {
+	/**algoG.init(graph);
 	FileDialog fd = new FileDialog(this, "Save graph", FileDialog.SAVE);
 	 String filename = fd.getFile();
 	 fd.setVisible(true);
 	 if (fd!=null)
 	 {
-		algoG.init(graph);
+		
 		algoG.save(fd.getDirectory()+filename +".txt");
 		JOptionPane.showMessageDialog(this, "Graph saved to " + fd.getFile(), "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
 	 }
 	 else
            JOptionPane.showMessageDialog(this, "File did not saved" , "ERROR", JOptionPane.ERROR_MESSAGE);
+*/
+	algoG.init(graph);
+    FileDialog fd = new FileDialog(this, "Save graph", FileDialog.SAVE);
+    fd.setFile("*.txt");
+    fd.setFilenameFilter(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.endsWith(".txt");
+        }
+    });
+    fd.setVisible(true);
+    if(fd.getDirectory()!=null&&fd.getFile()!=null) {
+        algoG.save(fd.getDirectory() + fd.getFile());
+        JOptionPane.showMessageDialog(this, "Graph saved to " + fd.getFile(), "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
+    }
+    else
+    {
+        JOptionPane.showMessageDialog(this, "File did not saved" , "ERROR", JOptionPane.ERROR_MESSAGE);
+
+    }
 }
 private void loadfile()
 {
-
+	 FileDialog fd = new FileDialog(this, "Open text file", FileDialog.LOAD);
+     fd.setFile("*.txt");
+     fd.setFilenameFilter(new FilenameFilter() {
+         @Override
+         public boolean accept(File dir, String name) {
+             return name.endsWith(".txt");
+         }
+     });
+     fd.setVisible(true);
+     algoG.init(fd.getDirectory() + fd.getFile());
+     this.graph = algoG.copy();
+     repaint();
 }
 private void isconnected()
 {
@@ -328,13 +363,13 @@ private void delete_edge()
 private void TSP()
 {
 	try {
-	algoG.init(graph);
-	String targets_Num=JOptionPane.showInputDialog(this, "Please Insert The Number Of Targets");
-	int targets_num=Integer.parseInt(targets_Num);
-	LinkedList<Integer> targets=new LinkedList<Integer>();
-	String keys="";
-	int key;
-	for (int i=0;i<targets_num;i++)
+		algoG.init(graph);
+		String targets_Num=JOptionPane.showInputDialog(this, "Please Insert The Number Of Targets");
+		int targets_num=Integer.parseInt(targets_Num);
+		LinkedList<Integer> targets=new LinkedList<Integer>();
+		String keys="";
+		int key;
+		for (int i=0;i<targets_num;i++)
 	{
 		  keys= JOptionPane.showInputDialog(this,"Please insert target number");
 		  key=Integer.parseInt(keys);
@@ -344,13 +379,17 @@ private void TSP()
 	String path="{";
 	
 	for (int i=0;i<Tsp.size();i++)
-		if(i!=Tsp.size()-1)
+	{
+		if(i!=Tsp.size()-1) {
 			path+=Tsp.get(i).getKey()+",";
-		else 
+			System.out.println(path);
+		}
+		else {
 			path+=Tsp.get(i).getKey();
-	path+="}";
-	 JOptionPane.showMessageDialog(this, " Is:"+path);
-	 repaint();
+		path+="}";}
+	}
+	 JOptionPane.showMessageDialog(this, "The Road  Is:"+path);
+	 
 	}
 	catch(Exception e)
 	{
@@ -448,8 +487,29 @@ public void mousePressed(MouseEvent e)
 		JOptionPane.showMessageDialog(this," ERR: "+e1.getMessage());
 	}
 
+
+}
+/*
+public void mousePressed(MouseEvent e) {
+	// TODO Auto-generated method stub
+	
+	int x = e.getX();
+	int y = e.getY();
+	Point3D p = new Point3D(x,y);
+	node_data s=new node();
+	s.setLocation(p);
+	K.addNode(s);
+	
+	
+	
+	
+	repaint();
+	
+>>>>>>> afba0ad1d00687c44621f0e708dc77a0bea49e1f
+
 	System.out.println("mousePressed");
 }
+*/
 @Override
 public void mouseReleased(MouseEvent e) {
 	// TODO Auto-generated method stub

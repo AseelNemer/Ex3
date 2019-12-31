@@ -1,3 +1,5 @@
+
+
 package Tests;
 import javax.swing.JFrame;
 
@@ -54,10 +56,10 @@ public class Tester {
 
 		graph_algorithms g1=new Graph_Algo();
 		g1.init(g);
-		/**Graph_GUI Monster =new Graph_GUI(g);
+		Graph_GUI Monster =new Graph_GUI(g);
 
-		Monster.setVisible(true);*/
-		graph copy_graph=g1.copy();
+		Monster.setVisible(true);
+		//graph copy_graph=g1.copy();
 
 	}	
 }

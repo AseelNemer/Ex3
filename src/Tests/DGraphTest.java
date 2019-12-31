@@ -97,7 +97,10 @@ void init() {
 
 	@Test
 	void testRemoveEdge() {
-		fail("Not yet implemented");
+		D=nodesFactory();
+		int x=D.edgeSize();
+		edge_data removedg=D.removeEdge(1, 2);
+		assertNotEquals(D.edgeSize(),x);
 	}
 
 	@Test

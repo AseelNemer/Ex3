@@ -66,18 +66,15 @@ private graph D=new DGraph();
 	
 	@Override
 	public void init(String file_name) {
-		graph graph=null;
+		
 		try 
 		{
 			FileInputStream file =new FileInputStream(file_name);
 			ObjectInputStream object=new ObjectInputStream(file);
-
-			 graph = (graph) object.readObject();
-			init(graph);
+			this.D= (graph) object.readObject();
+			
 			object.close();
 			file.close();
-			   System.out.println("Graph has been deserialized"); 
-	            System.out.println(D);
 		}
         catch(IOException ex) 
         { 
@@ -97,7 +94,7 @@ private graph D=new DGraph();
 		{
 			FileOutputStream file =new FileOutputStream(file_name);
 			ObjectOutputStream object=new ObjectOutputStream(file);
-			object.writeObject(this.D);
+			object.writeObject(D);
 			object.close();
 			file.close();
 			System.out.println("Graph has been serialized"); 
@@ -197,17 +194,19 @@ this.RecursiveShortPath(src);
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		// TODO Auto-generated method stub
-		if(this.isConnected()!=true) return null;
 		List<node_data> ans=new LinkedList<node_data>();
-		double min=Double.MAX_VALUE;
-		for(int src:targets) {
-			for(int dest:targets) {
-				if(shortestPathDist(src,dest)<min) {
-					ans=shortestPath(src,dest);
-					min=shortestPathDist(src,dest);
-				}
-			}
-		}
+        List<Integer> target =new ArrayList<Integer>(targets);
+        for(int i: target) {
+        	if(shortestPath(i, i+1)==null) throw new RuntimeException ("The Graph isnotconnected there is two targets without road");
+        	ans.addAll(shortestPath(i,i+1));
+        	Iterator<node_data> itr=ans.iterator();
+        	while(itr.hasNext()) {
+        		node_data node=itr.next();
+        		if(target.contains(node.getKey())) {
+        			target.remove(node.getKey());
+        		};
+        	}
+        }
 		return ans;
 	}
 
@@ -311,11 +310,20 @@ private void RecursiveShortPath(int src) {
 			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		}
 =======
 		}
 		System.out.println(F.getMC());
 >>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc*/
+
+
+	
+
+	
+		
+
+
 }
 	
 }
