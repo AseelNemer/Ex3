@@ -239,17 +239,19 @@ this.RecursiveShortPath(src);
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		// TODO Auto-generated method stub
-		if(this.isConnected()!=true) return null;
 		List<node_data> ans=new LinkedList<node_data>();
-		double min=Double.MAX_VALUE;
-		for(int src:targets) {
-			for(int dest:targets) {
-				if(shortestPathDist(src,dest)<min) {
-					ans=shortestPath(src,dest);
-					min=shortestPathDist(src,dest);
-				}
-			}
-		}
+        List<Integer> target =new ArrayList<Integer>(targets);
+        for(int i: target) {
+        	if(shortestPath(i, i+1)==null) throw new RuntimeException ("The Graph isnotconnected there is two targets without road");
+        	ans.addAll(shortestPath(i,i+1));
+        	Iterator<node_data> itr=ans.iterator();
+        	while(itr.hasNext()) {
+        		node_data node=itr.next();
+        		if(target.contains(node.getKey())) {
+        			target.remove(node.getKey());
+        		};
+        	}
+        }
 		return ans;
 	}
 
@@ -351,12 +353,12 @@ this.RecursiveShortPath(src);
 			edge_data n=itr.next();
 			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
 		}
-<<<<<<< HEAD
+
 		}*/
-=======
-		}
-		System.out.println(F.getMC());
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
+
+	
+		
+
 }
 	
 }

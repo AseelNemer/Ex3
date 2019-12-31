@@ -139,7 +139,7 @@ public void paint(Graphics g )
 	
 	Collection<node_data> node=graph.getV();
 	Iterator<node_data> nodes=node.iterator();
-<<<<<<< HEAD
+
 	
 		while(nodes.hasNext()) 
 		{
@@ -153,14 +153,9 @@ public void paint(Graphics g )
 			g.drawString(key, n.getLocation().ix()+3, n.getLocation().iy());
 			Collection<edge_data> edg=graph.getE(n.getKey());	
 
-=======
-if(prev==null) {
-		while(nodes.hasNext()) {
-        node_data n=nodes.next();
-		g.setColor(Color.BLUE);
-		g.fillOval((int)n.getLocation().x(), (int)n.getLocation().y(), 10, 10);
-			Collection<edge_data> edg=K.getE(n.getKey());	
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
+
+	
+
 		Iterator<edge_data> itr=edg.iterator();
 		while(itr.hasNext()) {
 
@@ -177,18 +172,15 @@ if(prev==null) {
 			
 			g.drawString(Double.toString(s.getWeight()), (int)((p.x()+(int)p2.x())/2),	(int)((p.y()+(int)p2.y())/2));
 		
-			 prev=K.getNode(s.getDest());
 		  }
 		}
 		
 }
-//else {
-	node_data LastNE=K.getNode(K.getV().size());
-   K.connect(prev.getKey(),LastNE.getKey(),Math.random()*20);
+
    
 
    
-   }
+
 //}
 @Override
 public void actionPerformed(ActionEvent e) {
@@ -414,7 +406,7 @@ public void mouseExited(MouseEvent e) {
 	System.out.println("mouseExited");
 }
 @Override
-<<<<<<< HEAD
+
 public void mousePressed(MouseEvent e) 
 {
 	//String str_key = JOptionPane.showInputDialog(this, "Please insert node key");
@@ -432,7 +424,8 @@ public void mousePressed(MouseEvent e)
 	{
 		JOptionPane.showMessageDialog(this," ERR: "+e1.getMessage());
 	}
-=======
+}
+/*
 public void mousePressed(MouseEvent e) {
 	// TODO Auto-generated method stub
 	
@@ -448,9 +441,10 @@ public void mousePressed(MouseEvent e) {
 	
 	repaint();
 	
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
+
 	System.out.println("mousePressed");
 }
+*/
 @Override
 public void mouseReleased(MouseEvent e) {
 	// TODO Auto-generated method stub
