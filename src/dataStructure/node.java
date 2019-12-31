@@ -26,11 +26,12 @@ public class node implements node_data{
      
  }
  public node(Point3D p) {
-	 	this.key = id++;
+	 	this.key = id+1;
 		this.weight = 0;
 		this.location = p;
 		this.info = "";
 		this.tag = 0;
+		id=id+1;
 	}
  public node(int key,Point3D location) {
 		this.key = key;
