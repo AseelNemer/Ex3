@@ -145,6 +145,7 @@ public DGraph()
 		}
 		return remove_edge;
 	}
+	
 
 	@Override
 	public int nodeSize() {

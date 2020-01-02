@@ -198,11 +198,12 @@ this.RecursiveShortPath(src);
         List<Integer> target =new ArrayList<Integer>(targets);
         for(int i: target) {
         	if(shortestPath(i, i+1)==null) throw new RuntimeException ("The Graph isnotconnected there is two targets without road");
+        	if(target.size()==1) break;
         	ans.addAll(shortestPath(i,i+1));
         	Iterator<node_data> itr=ans.iterator();
         	while(itr.hasNext()) {
         		node_data node=itr.next();
-        		if(target.contains(node.getKey())) {
+        		if(target.contains(node.getKey()) && target.get(i+1)!=node.getKey()) {
         			target.remove(node.getKey());
         		};
         	}

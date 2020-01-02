@@ -35,8 +35,8 @@ import dataStructure.node;
 import dataStructure.node_data;
 import utils.Point3D;
 
-public class Graph_GUI extends JFrame implements ActionListener, MouseListener {
-
+public class Graph_GUI extends JFrame implements ActionListener, MouseListener { 
+	
 	 private graph graph;
 	 private Graph_Algo algoG;
 	 
@@ -175,16 +175,16 @@ public void paint(Graphics g )
 			
 
 				g.setColor(Color.YELLOW);
-				int x=(int)0.8*p2.ix()+ (int)0.2*p.ix();
-				int y =(int)0.8*p2.iy()+ (int)0.2*p.iy();
-				g.fillOval(x-5, y-5, 10, 10);
+				int x=(int) ((0.8*p2.ix())+ (0.2*p.ix()));
+				int y =(int)((0.8*p2.iy())+ (0.2*p.iy()));
+				g.fillOval(x-5,y-5,10,10);
 				
 				//g.fillOval(x, y, width, height);
 			}
 			}
 		
 	}
-
+ 
 	
 @Override
 public void actionPerformed(ActionEvent e) {

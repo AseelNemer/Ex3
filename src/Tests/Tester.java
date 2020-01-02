@@ -52,7 +52,7 @@ public class Tester {
 		g.connect(5, 4, 6);
 		g.connect(5, 6, 7);
 		g.connect(6, 4,12);
-		g.connect(6, 5, 4);
+	
 
 		graph_algorithms g1=new Graph_Algo();
 		g1.init(g);
