@@ -142,6 +142,20 @@ public void paint(Graphics g )
 	
 	Collection<node_data> node=graph.getV();
 	Iterator<node_data> nodes=node.iterator();
+	
+	while (nodes.hasNext())
+	{
+		
+		node_data n=nodes.next();
+		if(n.getLocation()==null){
+		int rx = (int)(Math.random()*500+160);
+		int ry = (int)(Math.random()*400+150);
+		
+		n.setLocation(new Point3D(rx, ry));
+		}
+	}
+	 node=graph.getV();
+	nodes=node.iterator();
 
 	
 		while(nodes.hasNext()) 
@@ -229,19 +243,7 @@ public void actionPerformed(ActionEvent e) {
 }
 private void savefile()
 {
-	/**algoG.init(graph);
-	FileDialog fd = new FileDialog(this, "Save graph", FileDialog.SAVE);
-	 String filename = fd.getFile();
-	 fd.setVisible(true);
-	 if (fd!=null)
-	 {
-		
-		algoG.save(fd.getDirectory()+filename +".txt");
-		JOptionPane.showMessageDialog(this, "Graph saved to " + fd.getFile(), "INFORMATION", JOptionPane.INFORMATION_MESSAGE);
-	 }
-	 else
-           JOptionPane.showMessageDialog(this, "File did not saved" , "ERROR", JOptionPane.ERROR_MESSAGE);
-*/
+
 	algoG.init(graph);
     FileDialog fd = new FileDialog(this, "Save graph", FileDialog.SAVE);
     fd.setFile("*.txt");
@@ -477,7 +479,6 @@ public void mousePressed(MouseEvent e)
 		System.out.println(x);
 		System.out.println(y);
 		Point3D p = new Point3D(x,y);
-		//int key=Integer.parseInt(str_key);
 		graph.addNode(new node(key,p));
 		JOptionPane.showMessageDialog(this, "Add Node succed");
 		repaint();
@@ -496,28 +497,5 @@ public void mouseReleased(MouseEvent e) {
 	System.out.println("mouseReleased");
 }
 
-/**public static graph nodesFactory() {
-	graph d=new DGraph();
-	d.addNode(new node(2,new Point3D(250,100)));
-	d.addNode(new node(1,new Point3D(50,250)));
-	d.addNode(new node(3,new Point3D(255,280)));
-	d.addNode(new node(4,new Point3D(500,500)));
-	d.addNode(new node(5,new Point3D(700,450)));
-	 d.connect(1, 2, 5);
-	 d.connect(1, 3, 4);
-	 d.connect(1, 4, 7);
-	 d.connect(2, 5, 2);
-	 d.connect(4, 5, 3);
-	 d.connect(3, 4, 1.5);
-<<<<<<< HEAD
-	graph_algorithms  g=new Graph_Algo();
-	g.init(d);
-	//System.out.println(g.isConnected());
-	 
 
-=======
-	 
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc
-	 return d;
-}*/
 }

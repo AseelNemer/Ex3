@@ -31,11 +31,17 @@ import utils.Point3D;
 public class Graph_Algo implements graph_algorithms,Serializable{
 private graph D=new DGraph();
 
-	public Graph_Algo() 
+public Graph_Algo() 
+{
+	D=new DGraph();
+
+}
+	public Graph_Algo(graph g) 
 	{
 		D=new DGraph();
-		
+		this.init(g);
 	}
+	
 	
 	@Override
 	public void init(graph g) {
