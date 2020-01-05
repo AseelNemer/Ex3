@@ -51,6 +51,13 @@ public DGraph()
 
 	@Override
 	public void connect(int src, int dest, double w) {
+		if(!nodes.containsKey(src) ) {
+			throw new RuntimeException ("src is not contained in the graph : "+src);
+		}
+		if(!nodes.containsKey(dest)) {
+			throw new RuntimeException ("dest is not contained in the graph : "+dest);
+			
+		}
 		//if edges contain this src
 		if(nodes.containsKey(src) && nodes.containsKey(dest) && src!=dest) 
 		{
@@ -156,14 +163,7 @@ public DGraph()
 	@Override
 	public int edgeSize() {
 		// TODO Auto-generated method stub
-		/**Iterator<Integer> itr=edges.keySet().iterator();
-		int V=0;
-		int i;
-		while(itr.hasNext()) {
-			i=itr.next();
-			V+=edges.get(i).size();
-		}
-		return V;*/
+
 		return num_of_edges;
 	}
 
@@ -171,7 +171,5 @@ public DGraph()
 	public int getMC() {
 		return MC;
 	}
-	public static void main(String[] args){
-//graph D=Graph_GUI.nodesFactory();
-		}
+
 }

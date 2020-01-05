@@ -8,14 +8,15 @@ public class node implements node_data{
  private double weight;
  private String info;
  private int tag;
- public static int id = 1;
+ public static int id = 0;
  public node()
  {
-	 this.key = id++;
+	 this.key = id+1;
 	 setLocation (new Point3D((double)this.getKey(),(double)this.getKey()));
 	 this.weight=(Double.MAX_VALUE);
 	 this.info=null;
 	 this.tag=0;
+	 id=id+1;
  }
  public node(node_data n)
  {
@@ -117,10 +118,5 @@ public class node implements node_data{
 		else
 			return ("[Key: " + key + ", Location: null]");
 	}
-public static void main(String[] args) {
-	Point3D p=new Point3D(2,3);
-	node a=new node(3,p);
-	System.out.println(a);
-	
-}
+
 }

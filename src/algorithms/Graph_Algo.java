@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -27,7 +28,7 @@ import utils.Point3D;
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms,Serializable{
 private graph D=new DGraph();
 
 	public Graph_Algo() 
@@ -161,8 +162,9 @@ private graph D=new DGraph();
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
-
-		LinkedList<node_data> list=new LinkedList<node_data>();
+	LinkedList<node_data> list=new LinkedList<node_data>();
+		try {
+	
 		node_data node=new node();
 		if(shortestPathDist( src, dest)>=0)
 		{
@@ -178,17 +180,11 @@ private graph D=new DGraph();
 		list.addFirst(D.getNode(src));
 		
 		return list;
-/**=======
-		// TODO Auto-generated method stub
-this.RecursiveShortPath(src);
-	LinkedList<node_data> ans=new LinkedList<node_data>();
-	while(Integer.parseInt(D.getNode(src).getInfo())!=dest) {
-		ans.add(D.getNode(src));
+
+	}catch(IllegalArgumentException e) {
+		System.out.println(e.getMessage());
 	}
-	ans.add(D.getNode(dest));
-	
-	return ans;
->>>>>>> d08184186dbbda3c57ea194952a2ad0339771dae*/
+return list ;
 	}
 
 	@Override

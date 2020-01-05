@@ -489,27 +489,7 @@ public void mousePressed(MouseEvent e)
 
 
 }
-/*
-public void mousePressed(MouseEvent e) {
-	// TODO Auto-generated method stub
-	
-	int x = e.getX();
-	int y = e.getY();
-	Point3D p = new Point3D(x,y);
-	node_data s=new node();
-	s.setLocation(p);
-	K.addNode(s);
-	
-	
-	
-	
-	repaint();
-	
->>>>>>> afba0ad1d00687c44621f0e708dc77a0bea49e1f
 
-	System.out.println("mousePressed");
-}
-*/
 @Override
 public void mouseReleased(MouseEvent e) {
 	// TODO Auto-generated method stub
