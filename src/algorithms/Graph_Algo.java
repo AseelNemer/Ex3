@@ -287,32 +287,7 @@ private void RecursiveShortPath(int src) {
 		}
 	
 	
-	public static void main(String[] args) {
-	/**	graph_algorithms g=new Graph_Algo();
-		graph D=Graph_GUI.nodesFactory();
-		g.init(D);
-		System.out.println(g.isConnected());
-	    double x=g.shortestPathDist(1,4);
-	    System.out.println(x);
-		graph F=(graph) g.copy();
-		Collection<node_data> b=F.getV();
-		Iterator<node_data> iter=b.iterator();
-		while(iter.hasNext()) {
-			node_data no=iter.next();
-		Collection<edge_data> a=F.getE(no.getKey());
-		Iterator<edge_data> itr=a.iterator();
-	System.out.println(a.size());
-		while(itr.hasNext()) {
-			edge_data n=itr.next();
-			System.out.println(n.getSrc()+","+n.getDest()+","+n.getWeight());
-		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		}
-=======
-		}
-		System.out.println(F.getMC());
->>>>>>> 9acd3493fd39d1d4dacb90970d8eb4f378372abc*/
+
 
 
 	
@@ -321,6 +296,6 @@ private void RecursiveShortPath(int src) {
 		
 
 
-}
+
 	
 }
