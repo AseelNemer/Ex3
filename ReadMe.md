@@ -13,4 +13,4 @@
 # Graph Algorithims:
 * isConnected:Checking If there is a valid path from EVREY node to each
 other node. NOTE: assume directional graph - a valid path (a-->b) does NOT imply a valid path (b-->a).
-* ShortestPath:check the length of the shortest path between src to dest while src is the strat vertex and dest is the end vertex, and return the Road Of Path In list of node_data.
+* ShortestPath:check the length of the shortest path between src to dest while src is the start vertex and dest is the end vertex, and return the Road Of Path In list of node_data.
